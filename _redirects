@@ -1,0 +1,98 @@
+# Pricing page removed — redirect to contact
+/pricing.html /contact.html 301
+/pricing /contact.html 301
+
+# Business communication page removed — redirect to solutions
+/business-communication.html /solutions.html 301
+/business-communication /solutions.html 301
+
+# Redirect old Wix URLs to homepage
+/properties/* /index.html 301
+/search-results /index.html 301
+/search-results/* /index.html 301
+/grants /index.html 301
+/grants/* /index.html 301
+/post/* /index.html 301
+/portfolio/* /index.html 301
+/services/* /index.html 301
+/services /solutions.html 301
+/team /about.html 301
+/team.html /about.html 301
+
+# Redirections for consolidated/deleted service pages
+/ai-agents.html /ai-automation.html 301
+/ai-voice-agents.html /ai-automation.html 301
+/ai-automation-development.html /ai-automation.html 301
+/workflow-automation.html /ai-automation.html 301
+/mobile-ios-app-development.html /mobile-apps.html 301
+/mobile-android-app-development.html /mobile-apps.html 301
+/tech-react.html /web-development.html 301
+/tech-aws.html /cloud-devops.html 301
+
+# Redirections for orphaned service pages → pillar pages
+/ecommerce-development.html /custom-software.html 301
+/wordpress-cms-development.html /custom-software.html 301
+/custom-crm-development.html /enterprise-platforms.html 301
+/cybersecurity.html /cloud-devops.html 301
+/lead-gen-scraping.html /digital-marketing.html 301
+/motion-video.html /digital-marketing.html 301
+
+# No real testimonial content exists site-wide (confirmed zero quotes in data/*.json) -
+# redirect to the real proof page instead of shipping an "Error loading content" page
+/client-reviews.html /clients.html 301
+/client-reviews /clients 301
+
+# Redirections for orphaned company/trust pages → about
+/engagement-models.html /about.html 301
+/hire-dedicated-developers.html /about.html 301
+/our-purpose.html /about.html 301
+/project-communication-strategy.html /about.html 301
+/why-trai.html /about.html 301
+/incubation.html /about.html 301
+
+# Redirections for deleted mobile app sub-pages
+/flutter-app-development.html /mobile-apps.html 301
+/mobile-mobile-game-development.html /mobile-apps.html 301
+/mobile-pwa-development.html /mobile-apps.html 301
+/mobile-wearable-app-development.html /mobile-apps.html 301
+/mobile-app-prototype-strategy.html /mobile-apps.html 301
+/mobile-cross-platform-app-development.html /mobile-apps.html 301
+/mobile-native-mobile-app-development.html /mobile-apps.html 301
+
+# --- New 301 Redirects for GSC 404s ---
+# Handle the old /pages/ sub-directory (common from old CMS setups)
+/pages/contact* /contact.html 301
+/pages/about* /about.html 301
+/pages/web-development* /web-development.html 301
+/pages/solutions* /solutions.html 301
+/pages/blog* /blog.html 301
+/pages/case-studies* /clients.html 301
+/pages/digital-marketing* /digital-marketing.html 301
+/pages/billing-invoicing* /enterprise-platforms.html 301
+
+# Industry-specific old pages -> Industries pillar page
+/pages/finance* /industries.html 301
+/pages/fintech* /industries.html#fintech 301
+/pages/retail* /industries.html#ecommerce 301
+/pages/hotels* /industries.html 301
+/pages/legal-firms* /industries.html 301
+/pages/salons* /industries.html 301
+/pages/healthtech* /industries.html#healthcare 301
+/pages/education* /industries.html#edtech 301
+
+# Catch remaining /pages/ URLs
+/pages/* /index.html 301
+/pages /index.html 301
+
+# Orphaned / old tech pages
+/tech-headless-cms.html /custom-software.html 301
+/tech-swift.html /mobile-apps.html 301
+/micro-business /msmes.html 301
+/micro-business.html /msmes.html 301
+
+# Miscellaneous
+/search* /index.html 301
+/coming-soon /index.html 301
+
+# Catch any other old paths that don't match a real file
+/* /index.html 404

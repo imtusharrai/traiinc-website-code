@@ -1,0 +1,3287 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    // Bot Detection for SEO
+    if (/bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent)) {
+        document.documentElement.classList.add('bot-detected');
+    }
+
+    // --- Tech Page Renderer ---
+    function renderTechPage(data, pageId) {
+        return `
+            <!-- HERO -->
+            <header class="hero hero-half">
+                <div class="container hero-content center">
+                    <h1 class="hero-title">${data.name} Development</h1>
+                    <p class="hero-subtitle">${data.description}</p>
+                    <div class="hero-cta justify-center">
+                        <a href="contact.html" class="btn-primary large">Get in Touch</a>
+                    </div>
+                </div>
+            </header>
+            <!-- WHY TRAI -->
+            <section class="container fade-in section-pad">
+                <div class="section-header">
+                    <h4 class="mini-title">Why Trai Inc for ${data.name}?</h4>
+                    <h2>Engineering that drives results.</h2>
+                </div>
+                <div class="tech-why-text">
+                    <p>${data.why_us}</p>
+                </div>
+            </section>
+            <!-- USE CASES -->
+            <section class="container fade-in section-pad-bottom">
+                <div class="section-header center">
+                    <h4 class="mini-title">Common Applications</h4>
+                    <h2>Where we apply ${data.name}</h2>
+                </div>
+                <div class="bento-grid">
+                    ${data.use_cases.map((useCase, idx) => `
+                        <div class="bento-card ${idx % 3 === 0 ? 'wide' : ''} fade-in">
+                            <div class="bento-icon brand-gradient-bg">🎯</div>
+                            <h3 class="bento-title">${useCase}</h3>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+            <!-- BOTTOM CTA -->
+            <section class="container fade-in section-pad text-center">
+                <div class="hero-card">
+                    <h2>Ready to build with ${data.name}?</h2>
+                    <p class="tech-cta-desc">Talk directly to senior engineers — no sales reps, no fluff.</p>
+                    <a href="contact.html" class="btn-primary large mx-auto">Start Your Project</a>
+                </div>
+            </section>
+        `;
+    }
+
+    // --- Mobile Service Page Renderer ---
+    function renderMobileServicePage(data, pageId) {
+        return `
+            <!-- HERO -->
+            <header class="hero hero-half">
+                <div class="container hero-content center">
+                    <h1 class="hero-title">${data.name}</h1>
+                    <p class="hero-subtitle">${data.description}</p>
+                    <div class="hero-cta justify-center">
+                        <a href="contact.html" class="btn-primary large">Get in Touch</a>
+                    </div>
+                </div>
+            </header>
+            <!-- WHY TRAI -->
+            <section class="container fade-in section-pad">
+                <div class="section-header">
+                    <h4 class="mini-title">Why Trai Inc for ${data.name}?</h4>
+                    <h2>Engineering that drives results.</h2>
+                </div>
+                <div class="tech-why-text">
+                    <p>${data.why_us}</p>
+                </div>
+            </section>
+            <!-- USE CASES -->
+            <section class="container fade-in section-pad-bottom">
+                <div class="section-header center">
+                    <h4 class="mini-title">Common Applications</h4>
+                    <h2>Where we apply ${data.name}</h2>
+                </div>
+                <div class="bento-grid">
+                    ${data.use_cases.map((useCase, idx) => `
+                        <div class="bento-card ${idx % 3 === 0 ? 'wide' : ''} fade-in">
+                            <div class="bento-icon brand-gradient-bg">📱</div>
+                            <h3 class="bento-title">${useCase}</h3>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+            <!-- BOTTOM CTA -->
+            <section class="container fade-in section-pad text-center">
+                <div class="hero-card">
+                    <h2>Ready to build your ${data.name}?</h2>
+                    <p class="tech-cta-desc">Talk directly to senior engineers — no sales reps, no fluff.</p>
+                    <a href="contact.html" class="btn-primary large mx-auto">Start Your Project</a>
+                </div>
+            </section>
+        `;
+    }
+    // --- Case Study Page Renderer ---
+    function renderCaseStudy(data, pageId) {
+        const sections = [
+            { key: 'introduction', icon: '📋', title: 'Overview' },
+            { key: 'challenge', icon: '⚡', title: 'The Challenge' },
+            { key: 'solution', icon: '🛠️', title: 'The Solution' },
+            { key: 'results', icon: '📈', title: 'The Results' }
+        ];
+
+        return `
+            <header class="cf-hero-wrapper case-study-hero-split">
+                <div class="container case-study-hero-grid fade-in">
+                    <div class="case-study-hero-text">
+                        <h4 class="mini-title">${data.hero.tag}</h4>
+                        <h1 class="solutions-header-title">${data.hero.title}</h1>
+                    </div>
+                    ${data.hero.image ? `
+                    <div class="case-study-hero-image">
+                        <img src="${data.hero.image}" alt="${data.hero.title}" />
+                    </div>
+                    ` : ''}
+                </div>
+            </header>
+
+            <section class="container fade-in" style="padding:60px 0;">
+                <div style="max-width:800px;margin:0 auto;">
+                    ${sections.map(s => data.tabs[s.key] ? `
+                    <div class="spec-card fade-in" style="margin-bottom:24px;padding:32px;">
+                        <h3 style="display:flex;align-items:center;gap:10px;margin-bottom:16px;font-weight:600;color:var(--text-main);">
+                            <span style="">${s.icon}</span> ${s.title}
+                        </h3>
+                        <p style="line-height:1.65;color:var(--text-muted);">${data.tabs[s.key].text}</p>
+                    </div>
+                    ` : '').join('')}
+
+                    ${data.learnMore && data.learnMore.length ? `
+                    <div style="margin-top:40px;">
+                        <h3 style="font-weight:600;color:var(--text-main);margin-bottom:16px;">More Case Studies</h3>
+                        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                            ${data.learnMore.map(item => `
+                                <a href="${item.link}" class="btn-primary" style="padding:10px 20px;">${item.name} →</a>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            </section>
+
+            <section class="content-section center section-pad-lg border-t-light">
+                <div class="container">
+                    <h2 class="mb-8">Have a similar project?</h2>
+                    <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
+                </div>
+            </section>
+        `;
+    }
+
+    // --- Development Process Page Renderer ---
+    function renderProcess(data) {
+        return `
+            <header class="hero hero-half">
+                <div class="container hero-content center">
+                    <h4 class="mini-title">${data.header.subtitle || 'OUR PROCESS'}</h4>
+                    <h1 class="hero-title">${data.header.title}</h1>
+                    ${data.intro ? `<p class="hero-subtitle">${data.intro.text}</p>` : ''}
+                </div>
+            </header>
+
+            ${data.model && data.model.advantages && data.model.advantages.length ? `
+            <section class="container fade-in section-pad">
+                <div class="section-header center">
+                    <h4 class="mini-title">${data.model.subtitle || ''}</h4>
+                    <h2>${data.model.title || ''}</h2>
+                    ${data.model.description ? `<p class="section-desc">${data.model.description}</p>` : ''}
+                </div>
+                <div class="bento-grid">
+                    ${data.model.advantages.map((adv, idx) => `
+                        <div class="bento-card ${idx % 3 === 0 ? 'wide' : ''} fade-in">
+                            <div class="bento-icon brand-gradient-bg">${adv.icon || '⚡'}</div>
+                            <h3 class="bento-title">${adv.title}</h3>
+                            <p class="bento-desc">${adv.desc}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+            ` : ''}
+
+            <section class="container fade-in section-pad text-center">
+                <div class="hero-card">
+                    <h2>${data.cta.title}</h2>
+                    <p class="tech-cta-desc">${data.cta.description}</p>
+                    <a href="contact.html" class="btn-primary large mx-auto">${data.cta.button_text || 'Get in Touch'}</a>
+                </div>
+            </section>
+        `;
+    }
+
+    // Fetch and Render Dynamic Content
+    const pageId = document.body.getAttribute("data-page") || "";
+    const dynamicContainer = document.getElementById("content") || document.getElementById("dynamic-content");
+
+    const servicePages = [
+        'ai-agents', 'ai-automation', 'ai-voice-agents', 'cloud-devops',
+        'custom-software', 'content-creation', 'cybersecurity', 'data-analytics', 'digital-marketing',
+        'enterprise-platforms', 'lead-gen-scraping', 'mobile-apps', 'motion-video',
+        'ui-ux-design', 'web-development', 'workflow-automation',
+        'flutter-app-development', 'ecommerce-development', 'custom-crm-development', 'wordpress-cms-development',
+        'ai-automation-development'
+    ];
+
+    // Only pages with a registered renderer should fetch JSON
+    const renderers = {
+        'bhu-master': renderCaseStudy,
+        workezy: renderCaseStudy,
+        'dashak-pharma': renderCaseStudy,
+        'om-group': renderCaseStudy,
+        home: renderHome,
+        about: renderAbout,
+        'why-trai': renderAbout,
+        'our-purpose': renderAbout,
+        'hire-dedicated-developers': renderAbout,
+        team: renderAbout,
+        'client-reviews': renderAbout,
+        'our-development-process': renderProcess,
+        'engagement-models': renderAbout,
+        'project-communication-strategy': renderAbout,
+        solutions: renderSolutions,
+        industries: renderIndustries,
+        incubation: renderIncubation,
+        careers: renderCareers,
+        partner: renderPartner,
+        contact: renderContact,
+        clients: renderClients,
+        startups: renderAudiencePage,
+        smb: renderAudiencePage,
+        enterprise: renderAudiencePage,
+        d2c: renderD2C,
+        msmes: renderD2C,
+        'app-store': renderAppStore,
+        'choosing-a-development-partner': renderTrustPage,
+        blog: renderBlog,
+        'blog-ai-agents-replacing-manual-workflows': renderBlogPost,
+        'blog-aws-vs-azure-vs-gcp': renderBlogPost,
+        'blog-local-seo-rank-google-maps': renderBlogPost,
+        'blog-5-free-digital-tools-msme': renderBlogPost,
+        'blog-whatsapp-business-security': renderBlogPost,
+        'blog-building-mvp-30-days': renderBlogPost,
+        'blog-react-native-vs-flutter': renderBlogPost,
+        privacy: renderLegal,
+        terms: renderLegal,
+        refund: renderLegal
+    };
+
+    servicePages.forEach(slug => {
+        renderers[slug] = renderServicePage;
+    });
+
+    const industryPages = [
+        'healthcare-software-development-lucknow',
+        'real-estate-crm-solutions-lucknow',
+        'retail-pos-ecommerce-apps-lucknow',
+        'pharma-distribution-software-lucknow',
+        'fintech-banking-software-lucknow',
+        'logistics-supply-chain-software-lucknow',
+        'education-school-erp-software-lucknow',
+        'manufacturing-erp-software-lucknow',
+        'restaurant-pos-billing-software-lucknow',
+        'travel-hospitality-software-lucknow'
+    ];
+
+    industryPages.forEach(slug => {
+        renderers[slug] = renderIndustryLandingPage;
+    });
+
+    let renderFn = renderers[pageId];
+    if (pageId.startsWith('tech-')) {
+        renderFn = renderTechPage;
+    } else if (pageId.startsWith('blog-') && pageId !== 'blog') {
+        renderFn = renderBlogPost;
+    }
+
+    if (renderFn && dynamicContainer) {
+        try {
+            // Only fetch and re-render if the static HTML wasn't generated (i.e. if the loader is still there or it says Loading...)
+            if (dynamicContainer.querySelector('.loader') || dynamicContainer.innerHTML.includes('Loading...')) {
+                let fetchUrl = '';
+                const caseStudyPages = ['bhu-master', 'workezy', 'dashak-pharma', 'om-group'];
+                
+                if (pageId.startsWith('tech-')) {
+                    fetchUrl = 'data/technologies.json';
+                } else if (caseStudyPages.includes(pageId)) {
+                    fetchUrl = 'data/case-studies.json';
+                } else {
+                    fetchUrl = servicePages.includes(pageId) ? `data/services.json` : `data/${pageId}.json`;
+                }
+
+                const response = await fetch(`${fetchUrl}?v=` + new Date().getTime());
+                if (!response.ok) throw new Error("Network response was not ok");
+                let data = await response.json();
+                
+                if (caseStudyPages.includes(pageId)) {
+                    data = data[pageId];
+                }
+                
+                if (pageId.startsWith('tech-')) {
+                    const techId = pageId.replace('tech-', '');
+                    let foundTech = null;
+                    for (const cat of data.categories) {
+                        const tech = cat.technologies.find(t => t.id === techId);
+                        if (tech) { foundTech = tech; break; }
+                    }
+                    if (foundTech) {
+                        data = foundTech;
+                    } else {
+                        throw new Error("Technology not found in technologies.json");
+                    }
+                } else if (pageId.startsWith('mobile-') && pageId !== 'mobile-apps') {
+                    const mobileId = pageId.replace('mobile-', '');
+                    let foundService = data.services.find(s => s.id === mobileId);
+                    if (foundService) {
+                        data = foundService;
+                    } else {
+                        throw new Error("Mobile service not found in mobile-services.json");
+                    }
+                }
+
+                dynamicContainer.innerHTML = renderFn(data, pageId);
+            }
+
+            initAnimations();
+
+            // --- Blog filter click handler ---
+            if (pageId === 'blog') {
+                document.querySelectorAll('.blog-filter').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.blog-filter').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const filter = this.getAttribute('data-filter');
+                        const cards = document.querySelectorAll('.blog-card');
+                        const featured = document.querySelector('.blog-featured');
+                        if (filter === 'All Posts') {
+                            cards.forEach(c => { c.style.display = ''; });
+                            if (featured) featured.style.display = '';
+                        } else {
+                            cards.forEach(c => {
+                                c.style.display = c.getAttribute('data-tag') === filter ? '' : 'none';
+                            });
+                            if (featured) {
+                                featured.style.display = featured.getAttribute('data-tag') === filter ? '' : 'none';
+                            }
+                        }
+                    });
+                });
+            }
+
+            // Initialize 3D TRAI Bot and Audience Gallery on home page
+            if (pageId === 'home') {
+                if (window.TraiBot) {
+                    setTimeout(() => {
+                        window.TraiBot.init('#traibot-container');
+                    }, 100);
+                }
+
+                // Audience Gallery Auto-Rotate
+                document.querySelectorAll('.audience-gallery-card').forEach(gallery => {
+                    const slides = gallery.querySelectorAll('.audience-gallery-slide');
+                    const pills = gallery.querySelectorAll('.audience-gallery-pill');
+                    if (slides.length <= 1) return;
+                    let currentIdx = 0;
+                    let timer = null;
+
+                    function switchSlide(idx) {
+                        currentIdx = idx;
+                        slides.forEach((s, i) => s.classList.toggle('active', i === currentIdx));
+                        pills.forEach((p, i) => p.classList.toggle('active', i === currentIdx));
+                    }
+
+                    function startTimer() {
+                        if (timer) clearInterval(timer);
+                        timer = setInterval(() => {
+                            switchSlide((currentIdx + 1) % slides.length);
+                        }, 3800);
+                    }
+
+                    gallery.addEventListener('mouseenter', () => { if (timer) clearInterval(timer); });
+                    gallery.addEventListener('mouseleave', startTimer);
+                    startTimer();
+                });
+            }
+
+
+            function showFormModal(type, title, message) {
+                const existing = document.getElementById('formModal');
+                if (existing) existing.remove();
+                const icon = type === 'success'
+                    ? '<svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#10B981" opacity="0.12"/><circle cx="28" cy="28" r="20" fill="#10B981" opacity="0.2"/><path d="M20 28.5L25.5 34L36 22" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+                    : '<svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#EF4444" opacity="0.12"/><circle cx="28" cy="28" r="20" fill="#EF4444" opacity="0.2"/><path d="M22 22L34 34M34 22L22 34" stroke="#EF4444" stroke-width="3" stroke-linecap="round"/></svg>';
+                const overlay = document.createElement('div');
+                overlay.id = 'formModal';
+                overlay.innerHTML = `
+                    <div class="form-modal-overlay">
+                        <div class="form-modal-card">
+                            <div class="form-modal-icon">${icon}</div>
+                            <h3 class="form-modal-title">${title}</h3>
+                            <p class="form-modal-msg">${message}</p>
+                            <button class="btn-primary form-modal-btn" onclick="document.getElementById('formModal').remove()">OK</button>
+                        </div>
+                    </div>`;
+                document.body.appendChild(overlay);
+                overlay.querySelector('.form-modal-overlay').addEventListener('click', function(e) {
+                    if (e.target === this) overlay.remove();
+                });
+            }
+
+            // --- Explicitly render Turnstile widget for SPA-injected content ---
+            function renderTurnstileWidget() {
+                const container = document.querySelector('.cf-turnstile');
+                if (!container) return;
+                // Clear any stale children from failed auto-render attempts
+                container.innerHTML = '';
+                turnstile.render(container, {
+                    sitekey: container.getAttribute('data-sitekey'),
+                    action: container.getAttribute('data-action') || '',
+                    theme: container.getAttribute('data-theme') || 'auto'
+                });
+            }
+            const turnstileContainer = document.querySelector('.cf-turnstile');
+            if (turnstileContainer) {
+                if (typeof turnstile !== 'undefined') {
+                    renderTurnstileWidget();
+                } else {
+                    // Turnstile api.js hasn't loaded yet (async/defer), wait for it
+                    let attempts = 0;
+                    const waitForTurnstile = setInterval(() => {
+                        attempts++;
+                        if (typeof turnstile !== 'undefined') {
+                            clearInterval(waitForTurnstile);
+                            renderTurnstileWidget();
+                        } else if (attempts > 50) { // Give up after ~5 seconds
+                            clearInterval(waitForTurnstile);
+                            console.warn('Turnstile API failed to load');
+                        }
+                    }, 100);
+                }
+            }
+
+            // --- FormSubmit Contact Form Handler ---
+            const contactFormEl = document.getElementById('contactForm');
+            if (contactFormEl) {
+                contactFormEl.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('contactSubmitBtn');
+                    const result = document.getElementById('formResult');
+                    const formData = new FormData(contactFormEl);
+
+                    // Use the official Turnstile JS API to get the token
+                    let turnstileToken = '';
+                    if (typeof turnstile !== 'undefined') {
+                        turnstileToken = turnstile.getResponse() || '';
+                    }
+                    if (!turnstileToken) {
+                        // Fallback: try FormData extraction
+                        const tokens = formData.getAll('cf-turnstile-response');
+                        turnstileToken = (tokens.find(t => t && t.trim() !== '')) || '';
+                    }
+                    if (!turnstileToken) {
+                        showFormModal('error', 'Verification Required', 'Please complete the security check before submitting.');
+                        return;
+                    }
+
+                    // Ensure the token is in the FormData for the backend
+                    formData.set('cf-turnstile-response', turnstileToken);
+
+                    btn.disabled = true;
+                    btn.textContent = 'Sending...';
+
+                    try {
+                        const response = await fetch(contactFormEl.action, {
+                            method: 'POST',
+                            body: formData
+                        });
+                        if (response.ok) {
+                            contactFormEl.reset();
+                            document.querySelectorAll('.contact-service-chip input:checked').forEach(cb => {
+                                cb.checked = false;
+                                cb.closest('.contact-service-chip').classList.remove('selected');
+                            });
+                            showFormModal('success', 'Message Sent!', 'We\'ll get back to you within 24 hours. Check your inbox for a confirmation email.');
+                        } else {
+                            const data = await response.json().catch(() => ({}));
+                            const errorMsg = data.error || 'Please try again or reach out via WhatsApp.';
+                            const details = data.details ? ` (${data.details.join(', ')})` : '';
+                            showFormModal('error', 'Something went wrong', errorMsg + details);
+                        }
+                    } catch (err) {
+                        showFormModal('error', 'Network Error', 'Please check your connection and try again.');
+                    }
+                    btn.disabled = false;
+                    btn.textContent = 'Send Inquiry';
+                });
+            }
+
+        } catch (error) {
+            dynamicContainer.innerHTML = `<div class="container section-pad text-center">
+                    <h2>Error loading content. Please run this via a local server (e.g. VSCode Live Server).</h2>
+                    <p class="text-muted mt-3">${error.message}</p>
+                </div>`;
+            console.error("Error fetching data:", error);
+        }
+    } else {
+        // Static page — just init animations
+        initAnimations();
+    }
+});
+
+/* ===== PAGE RENDERERS ===== */
+
+function renderFaq(faq) {
+    if (!faq || !faq.items || !faq.items.length) return '';
+    return `
+    <!-- ════════ FAQ ════════ -->
+    <section class="faq-section fade-in">
+        <div class="container faq-container">
+            <div class="section-header center">
+                <h4 class="mini-title">${faq.subtitle}</h4>
+                <h2>${faq.title}</h2>
+            </div>
+            <div class="faq-accordion">
+                ${faq.items.map((item, i) => `
+                <div class="faq-item">
+                    <button type="button" class="faq-question" aria-expanded="false" aria-controls="faq-answer-${i}">
+                        <span>${item.q}</span>
+                        <span class="faq-chevron" aria-hidden="true">${chevronDownSvg}</span>
+                    </button>
+                    <div id="faq-answer-${i}" class="faq-answer" role="region">
+                        <p class="faq-answer-text">${item.a}</p>
+                    </div>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+const chevronDownSvg = `<svg viewBox="0 0 10 6" width="10" height="6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+
+const audienceIcons = {
+    device: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`,
+    chat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
+    chart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="8"/><rect x="11" y="7" width="3" height="13"/><rect x="16" y="15" width="3" height="5"/></svg>`,
+    pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    globe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>`,
+    spark: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg>`,
+    cloud: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6 1.7A4 4 0 0 0 6.5 18h10.5z"/></svg>`,
+    briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`,
+    "chart-up": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 6"/><polyline points="15 6 21 6 21 12"/></svg>`,
+    building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18"/><line x1="8" y1="8" x2="8" y2="8.01"/><line x1="12" y1="8" x2="12" y2="8.01"/><line x1="16" y1="8" x2="16" y2="8.01"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="16" y1="12" x2="16" y2="12.01"/><line x1="9" y1="21" x2="9" y2="16"/><line x1="15" y1="21" x2="15" y2="16"/></svg>`,
+    database: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>`,
+    users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>`,
+    clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    whatsapp: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`,
+    map: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>`,
+    lock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+    mic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>`,
+    bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    code: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    palette: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.7-.8 1.7-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.8-1.7 1.7-1.7H17c2.8 0 5-2.2 5-5 0-5.5-4.5-9.5-10-9.5z"/></svg>`,
+    shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    cart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+    truck: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`
+};
+
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-question, .pricing-faq-question');
+    if (!btn) return;
+    const item = btn.closest('.faq-item, .pricing-faq-item');
+    const isOpen = item.classList.contains('open');
+    item.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+});
+
+document.addEventListener('click', (e) => {
+    const tab = e.target.closest('.service-tech-tab');
+    if (!tab) return;
+    const wrapper = tab.closest('.service-tech-card');
+    const index = tab.dataset.tabIndex;
+    wrapper.querySelectorAll('.service-tech-tab').forEach(t => t.classList.toggle('active', t.dataset.tabIndex === index));
+    wrapper.querySelectorAll('.service-tech-panel').forEach(p => p.classList.toggle('active', p.dataset.panelIndex === index));
+});
+
+document.addEventListener('click', (e) => {
+    const pill = e.target.closest('.audience-gallery-pill');
+    if (pill) {
+        const gallery = pill.closest('.audience-gallery-card');
+        if (!gallery) return;
+        const targetIndex = parseInt(pill.dataset.slideTo, 10);
+        gallery.querySelectorAll('.audience-gallery-slide').forEach((s, idx) => {
+            s.classList.toggle('active', idx === targetIndex);
+        });
+        gallery.querySelectorAll('.audience-gallery-pill').forEach((p, idx) => {
+            p.classList.toggle('active', idx === targetIndex);
+        });
+        return;
+    }
+
+    const tab = e.target.closest('.audience-tab-btn');
+    if (!tab) return;
+    const wrapper = tab.closest('.audience-finder');
+    const id = tab.dataset.audienceTab;
+    wrapper.querySelectorAll('.audience-tab-btn').forEach(t => {
+        const active = t.dataset.audienceTab === id;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', String(active));
+    });
+    wrapper.querySelectorAll('.audience-panel').forEach(p => p.classList.toggle('active', p.dataset.audiencePanel === id));
+});
+
+function renderHome(data) {
+    const hero = data.hero;
+    const un = data.un_agency;
+    const cap = data.capabilities;
+    const sb = data.services_banner;
+    const proof = data.proof;
+    const conv = data.conversion;
+    const af = data.audience_finder;
+
+    return `
+    <!-- ════════ HERO — AI AGENTS SHOWCASE ════════ -->
+    <section class="hero-cosmos" id="hero-cosmos">
+        <div id="traibot-container"></div>
+
+        <!-- Content Layer -->
+        <div class="hero-cosmos-content">
+            <p class="hero-cosmos-eyebrow">Trai Inc · AI-Native Engineering</p>
+            <h1 class="hero-cosmos-title">
+                <span class="hero-cosmos-line hero-cosmos-line--1">Run your</span>
+                <span class="hero-cosmos-line hero-cosmos-line--2">entire business</span>
+                <span class="hero-cosmos-line hero-cosmos-line--3">with <em class="hero-cosmos-ai">AI Agents</em></span>
+            </h1>
+            <p class="hero-cosmos-subtitle">Hand off engineering, sales, marketing, and ops to our AI-powered engineering team. Fixed-price guarantees. Senior engineers. Direct access.</p>
+            <a href="${hero.cta_primary.href}" class="btn-primary large hero-cosmos-cta">${hero.cta_primary.text}</a>
+            <div class="hero-cosmos-trust">
+                <div class="hero-trust-avatars">
+                    ${hero.trust_avatars.map((a, i) => `<span class="trust-avatar trust-avatar-${i + 1}">${a}</span>`).join('')}
+                </div>
+                <span>Trusted by <strong class="trust-count">${hero.trust_line}</strong>${hero.trust_suffix ? ` ${hero.trust_suffix}` : ''}</span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ════════ CLIENT LOGOS MARQUEE ════════ -->
+    ${(() => {
+        if (!data.clients_logos || data.clients_logos.length === 0) return '';
+        const half = Math.ceil(data.clients_logos.length / 2);
+        const row1 = data.clients_logos.slice(0, half);
+        const row2 = data.clients_logos.slice(half);
+        const renderGroup = (logos) => logos.map(logo => `
+            <div class="client-logo-item">
+                <img src="assets/clients/${logo}" alt="Client Partner Logo" class="client-logo-img">
+            </div>
+        `).join('');
+        return `
+        <section class="client-marquee-section" aria-label="Brands We Have Worked With">
+            <div class="container">
+                <div class="section-header text-center client-marquee-header">
+                    <span class="mini-title">${data.clients_section?.subtitle || 'PROVEN IMPACT ACROSS INDIA'}</span>
+                    <h2 class="text-3xl md:text-5xl font-bold mt-2">${data.clients_section?.title || 'Brands We Have Worked With'}</h2>
+                </div>
+            </div>
+            <div class="marquee-container">
+                <div class="marquee-row">
+                    <div class="marquee-track">
+                        <div class="marquee-group">
+                            ${renderGroup(row1)}
+                        </div>
+                        <div class="marquee-group" aria-hidden="true">
+                            ${renderGroup(row1)}
+                        </div>
+                    </div>
+                </div>
+                <div class="marquee-row">
+                    <div class="marquee-track marquee-track-row2">
+                        <div class="marquee-group">
+                            ${renderGroup(row2)}
+                        </div>
+                        <div class="marquee-group" aria-hidden="true">
+                            ${renderGroup(row2)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        `;
+    })()}
+
+    <!-- ════════ AUDIENCE FINDER (VERIZON STYLE TABS) ════════ -->
+    ${af ? `
+    <section id="audience-finder" class="audience-finder fade-in home-section-shaded">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="mini-title">${af.subtitle}</span>
+                <h2 class="text-5xl mt-3">${af.title}</h2>
+            </div>
+            <div class="audience-tabs-bar" role="tablist">
+                ${af.tabs.map((t, i) => `
+                <button type="button" class="audience-tab-btn${i === 0 ? ' active' : ''}" role="tab" aria-selected="${i === 0}" data-audience-tab="${t.id}">${t.label}</button>`).join('')}
+            </div>
+            ${af.tabs.map((t, i) => `
+            <div class="audience-panel ${i === 0 ? 'active' : ''}" id="panel-${t.id}" data-audience-panel="${t.id}">
+                <div class="audience-panel-left">
+                    <div class="audience-panel-intro">
+                        <span class="audience-panel-intro-badge">${t.badge}</span>
+                        <h3 class="audience-panel-title">${t.panel_title}</h3>
+                        <p class="audience-panel-subtitle">${t.panel_subtitle}</p>
+                    </div>
+                    <div class="audience-solution-grid">
+                        ${t.cards.map(c => `
+                        <div class="audience-solution-card">
+                            <span class="audience-solution-icon">${audienceIcons[c.icon_key] || ''}</span>
+                            ${c.tag ? `<span class="audience-solution-tag">${c.tag}</span>` : ''}
+                            <h4 class="audience-solution-title">${c.title}</h4>
+                            <p class="audience-solution-desc">${c.desc}</p>
+                        </div>`).join('')}
+                    </div>
+                    <div style="margin-top: 40px;">
+                        <a href="${t.cta_href}" class="audience-panel-cta">${t.cta_text} →</a>
+                    </div>
+                </div>
+                <div class="audience-panel-right">
+                    ${t.showcase_tiles && t.showcase_tiles.length > 0 ? `
+                    <div class="audience-multi-image-grid">
+                        ${t.showcase_tiles.map(tile => `
+                        <div class="audience-tile">
+                            <img src="${tile.src}" alt="${tile.title}" loading="lazy" />
+                            ${tile.tag ? `<span class="audience-tile-tag">${tile.tag}</span>` : ''}
+                            <div class="audience-tile-overlay">
+                                <strong>${tile.title}</strong>
+                                <span>${tile.desc}</span>
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    ` : (t.showcase_images && t.showcase_images.length > 0 ? `
+                    <div class="audience-gallery-card" data-gallery-id="${t.id}">
+                        <div class="audience-gallery-main">
+                            ${t.showcase_images.map((img, idx) => `
+                            <div class="audience-gallery-slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+                                <img src="${img.src}" alt="${img.title || ''}" loading="lazy" />
+                                ${img.tag ? `<span class="audience-gallery-tag">${img.tag}</span>` : ''}
+                                <div class="audience-gallery-caption">
+                                    <strong>${img.title}</strong>
+                                    <span>${img.caption}</span>
+                                </div>
+                            </div>
+                            `).join('')}
+                        </div>
+                        <div class="audience-gallery-nav">
+                            ${t.showcase_images.map((img, idx) => `
+                            <button type="button" class="audience-gallery-pill ${idx === 0 ? 'active' : ''}" data-slide-to="${idx}">
+                                ${img.short_label || img.tag || img.title}
+                            </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : (t.image ? `
+                    <div class="audience-panel-media">
+                        <img src="${t.image}" alt="${t.image_alt || ''}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+                        ${t.image_caption ? `<span class="audience-panel-media-caption">${t.image_caption}</span>` : ''}
+                    </div>
+                    ` : ''))}
+
+                    ${t.metrics_strip && !t.showcase_tiles && t.metrics_strip.length > 0 ? `
+                    <div class="audience-metrics-strip">
+                        ${t.metrics_strip.map(m => `
+                        <div class="audience-metric-item">
+                            <span class="ami-icon">${m.icon}</span>
+                            <div>
+                                <strong>${m.title}</strong>
+                                <p>${m.desc}</p>
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+                </div>
+
+            </div>`).join('')}
+        </div>
+    </section>
+    ` : ''}
+
+    <!-- ════════ THE UN-AGENCY MANIFESTO (T-MOBILE STYLE) ════════ -->
+    <section class="titan-manifesto fade-in home-section-shaded home-section-bordered-bottom">
+        <div class="container">
+            <div class="section-header max-w-800">
+                <h4 class="mini-title">${un.subtitle}</h4>
+                <h2 class="massive-title text-left">${un.title}</h2>
+            </div>
+            <div class="tmo-grid">
+                ${un.cards ? un.cards.map(card => `
+                <div class="tmo-card fade-in">
+                    ${card.img ? `<div class="tmo-card-media"><img src="${card.img}" alt="${card.title}" class="tmo-card-img" loading="lazy" /></div>` : ''}
+                    <div class="tmo-card-body">
+                        <h3 class="tmo-card-title">${card.title}</h3>
+                        <p class="tmo-card-desc">${card.desc}</p>
+                    </div>
+                </div>`).join('') : ''}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ CAPABILITIES (VERIZON STYLE — BANNER + GRID) ════════ -->
+    <section id="capabilities" class="cap-section fade-in">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="mini-title">${cap.subtitle}</span>
+                <h2 class="text-5xl mt-3">${cap.title}</h2>
+            </div>
+            <div class="cap-grid">
+                ${cap.cards.map(c => `
+                <a href="${c.href}" class="cap-cell fade-in">
+                    ${c.icon_key ? `<div class="cap-cell-header"><span class="cap-cell-icon">${audienceIcons[c.icon_key] || ''}</span><span class="cap-cell-arrow">›</span></div>` : ''}
+                    <div class="cap-cell-content">
+                        <h3 class="cap-cell-title">${c.title}</h3>
+                        ${c.desc ? `<p class="cap-cell-desc">${c.desc}</p>` : ''}
+                    </div>
+                </a>`).join('')}
+            </div>
+            <div class="svc-banner-wrap mt-15">
+                <img src="${sb.image}" alt="${sb.card_title}" class="svc-banner-img" loading="lazy" />
+                <div class="svc-banner-card">
+                    <h3 class="svc-banner-card-title">${sb.card_title}</h3>
+                    <p class="svc-banner-card-desc">${sb.card_desc}</p>
+                    <a href="${sb.card_href}" target="_blank" class="svc-banner-card-cta">${sb.card_cta}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ THE PROOF (VERIZON STYLE METRICS) ════════ -->
+    <section class="content-section fade-in home-section-shaded home-section-bordered-top">
+        <div class="container">
+            <div class="section-header center mb-10">
+                <h4 class="mini-title">${proof.subtitle}</h4>
+                <h2>${proof.title}</h2>
+            </div>
+            
+            <!-- Directory Card -->
+            <div class="directory-card fade-in">
+                <div class="featured-case-study-card__content">
+                    <h3 class="featured-case-study-card__title mb-4">${proof.directoryCard.title}</h3>
+                    <p class="featured-case-study-card__desc text-lg mb-6 leading-tight">${proof.directoryCard.description}</p>
+                    
+                    <div class="client-pills-row">
+                        ${proof.directoryCard.clientPills.map(p => `
+                        <a href="${p.link}" class="client-pill" data-accent="${p.accentColor}">${p.name}</a>
+                        `).join('')}
+                    </div>
+
+                    <a href="${proof.directoryCard.ctaLink}" class="featured-case-study-card__cta mt-4 inline-block">${proof.directoryCard.ctaText}</a>
+                </div>
+            </div>
+
+            <!-- Stat Highlights Row -->
+            <div class="stat-highlights-row fade-in">
+                ${proof.highlights.map(h => `
+                <div class="stat-highlight" data-accent="${h.accentColor}">
+                    <div class="stat-highlight__label">${h.label}</div>
+                    <a href="${h.link}" class="stat-highlight__client">${h.client}</a>
+                </div>
+                `).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ CONVERSION BLOCK (SPLIT COLUMN) ════════ -->
+    <section class="compare-section fade-in">
+        <div class="container conversion-split">
+            <div class="conversion-left">
+                <h4 class="mini-title">${conv.subtitle}</h4>
+                <h2>${conv.title}</h2>
+                <p>${conv.description}</p>
+                <a href="${conv.button_href}" target="_blank" class="btn-primary large">${conv.button_text}</a>
+            </div>
+            <div class="conversion-right">
+                <div class="stepper">
+                    ${conv.steps.map(s => `
+                    <div class="stepper-step">
+                        <h3 class="stepper-title">${s.title}</h3>
+                        <p class="stepper-desc">${s.desc}</p>
+                    </div>`).join('')}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    ${renderFaq(data.faq)}
+    `;
+}
+
+function renderAbout(data) {
+    return `
+    <!-- ════════ HERO — SPLIT (IDENTITY) ════════ -->
+    <section class="about-hero">
+        <div class="about-hero-split">
+            <div class="about-hero-left">
+                <p class="about-hero-eyebrow">${data.header.eyebrow}</p>
+                <h1 class="about-hero-title">${data.header.title.replace(/\n/g, '<br>')}</h1>
+                <p class="about-hero-desc">${data.header.description}</p>
+                <a href="#team" class="btn-primary large about-hero-cta">Meet the Team</a>
+            </div>
+            <div class="about-hero-right">
+                <img src="/img/about_hero_team.png" alt="Trai Inc engineering team collaborating in office" class="about-hero-img" loading="eager" fetchpriority="high">
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ STATS BAR ════════ -->
+    <section class="about-stats">
+        <div class="container">
+            <div class="about-stats-row">
+                ${data.numbers.stats.map(s => `
+                <div class="about-stat fade-in">
+                    <span class="about-stat-value">${s.value}</span>
+                    <span class="about-stat-label">${s.label}</span>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ MISSION / VISION / VALUES ════════ -->
+    <section class="about-purpose">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.purpose.subtitle}</h4>
+                <h2>Mission, Vision & Values</h2>
+            </div>
+            <div class="about-purpose-cards fade-in">
+                <div class="about-purpose-card about-purpose-mission">
+                    <span class="about-purpose-icon">${data.purpose.mission.icon}</span>
+                    <h3 class="about-purpose-label">${data.purpose.mission.label}</h3>
+                    <p class="about-purpose-text">${data.purpose.mission.text}</p>
+                </div>
+                <div class="about-purpose-card about-purpose-vision">
+                    <span class="about-purpose-icon">${data.purpose.vision.icon}</span>
+                    <h3 class="about-purpose-label">${data.purpose.vision.label}</h3>
+                    <p class="about-purpose-text">${data.purpose.vision.text}</p>
+                </div>
+            </div>
+            <div class="about-values-grid">
+                ${data.purpose.values.map(v => `
+                <div class="about-value-card fade-in">
+                    <div class="about-value-icon">${v.icon}</div>
+                    <h4 class="about-value-title">${v.title}</h4>
+                    <p class="about-value-desc">${v.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ TEAM ════════ -->
+    <section id="team" class="about-team">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.team.subtitle}</h4>
+                <h2>${data.team.title}</h2>
+            </div>
+
+            <!-- ── Founders & Directors (with photos) ── -->
+            <div class="team-founders-grid">
+                ${data.team.members.filter(m => m.tier === 'founder').map(m => `
+                <div class="team-founder-card fade-in">
+                    <div class="team-founder-photo">
+                        <img src="${m.image}" alt="${m.name}" loading="lazy">
+                    </div>
+                    <div class="team-founder-info">
+                        <h3 class="team-founder-name">${m.name}</h3>
+                        <p class="team-founder-role">${m.role}</p>
+                        <span class="team-founder-region">${m.region}</span>
+                        ${m.email ? `<a href="mailto:${m.email}" class="team-email-link" title="${m.email}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>` : ''}
+                    </div>
+                </div>`).join('')}
+            </div>
+
+            <!-- ── Senior Leadership (no photos) ── -->
+            <div class="team-tier-block fade-in">
+                <h3 class="team-tier-label">Senior Leadership</h3>
+                <div class="team-leaders-grid">
+                    ${data.team.members.filter(m => m.tier === 'leadership').map(m => `
+                    <div class="team-leader-card">
+                        <div class="team-leader-accent"></div>
+                        <div class="team-leader-body">
+                            <h4 class="team-leader-name">${m.name}</h4>
+                            <p class="team-leader-role">${m.role}</p>
+                            <div class="team-leader-meta">
+                                <span class="team-leader-region">${m.region}</span>
+                                ${m.email ? `<a href="mailto:${m.email}" class="team-email-link" title="${m.email}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>` : ''}
+                            </div>
+                        </div>
+                    </div>`).join('')}
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- ════════ HOW WE WORK — BENTO ════════ -->
+    <section class="about-work">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.model.subtitle}</h4>
+                <h2>${data.model.title}</h2>
+                <p class="about-work-desc">${data.model.description}</p>
+            </div>
+            <div class="about-work-grid">
+                ${data.model.advantages.map(a => `
+                <div class="about-work-card fade-in">
+                    <div class="about-work-icon">${a.icon}</div>
+                    <h3 class="about-work-card-title">${a.title}</h3>
+                    <p class="about-work-card-desc">${a.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ TIMELINE — MILESTONE CARDS ════════ -->
+    <section class="about-timeline">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.timeline.subtitle}</h4>
+                <h2>${data.timeline.title}</h2>
+            </div>
+            <div class="about-timeline-track">
+                ${data.timeline.milestones.map(m => `
+                <div class="about-milestone fade-in">
+                    <div class="about-milestone-dot"></div>
+                    <div class="about-milestone-card">
+                        <span class="about-milestone-year">${m.year}</span>
+                        <h3 class="about-milestone-title">${m.title}</h3>
+                        <p class="about-milestone-desc">${m.desc}</p>
+                    </div>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    ${renderFaq(data.faq)}
+
+    <!-- ════════ CTA ════════ -->
+    <section class="about-cta-section">
+        <div class="container">
+            <div class="about-cta-card fade-in">
+                <div class="about-cta-glow"></div>
+                <h2 class="about-cta-title">${data.cta.title}</h2>
+                <p class="about-cta-desc">${data.cta.description}</p>
+                <a href="contact.html" class="btn-primary large about-cta-btn">${data.cta.button_text}</a>
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+function renderIncubation(data) {
+    return `
+    <header class="incub-hero fade-in">
+        <div class="container max-w-900 mx-auto text-center section-pad-xl">
+            <h4 class="mini-title">${data.hero.subtitle}</h4>
+            <h1 class="main-heading">${data.hero.title}</h1>
+            <p class="incub-hero-desc">${data.hero.description}</p>
+            <a href="contact.html" class="btn-primary large">${data.cta.button_text}</a>
+            <p class="incub-scarcity">${data.scarcity || ''}</p>
+        </div>
+    </header>
+
+    <section class="section-card-band">
+        <div class="container">
+            <div class="flex-center-wrap gap-15">
+                ${data.stats.map(s => `
+                <div class="fade-in">
+                    <h3 class="incub-stat-value">${s.value}</h3>
+                    <p class="incub-stat-label">${s.label}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad-lg">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">INCUBATION TRACKS</h4>
+                <h2>Choose the track that matches your stage</h2>
+            </div>
+            <div class="grid-2 mt-12 gap-10">
+                ${data.programs.map(p => `
+                <div class="spec-card fade-in spec-card-tall">
+                    <div class="incub-program-icon">${p.icon}</div>
+                    <h3 class="incub-program-title">${p.title}</h3>
+                    <span class="incub-program-duration">⏱ ${p.duration}</span>
+                    <p class="incub-program-desc">${p.desc}</p>
+                    <ul class="list-none p-0">
+                        ${p.includes.map(i => `<li class="incub-check-item"><span class="incub-check-icon">✔</span> ${i}</li>`).join('')}
+                    </ul>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad-lg bg-darker">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">WHAT YOU GET</h4>
+                <h2>Everything a founder needs to ship and scale</h2>
+            </div>
+            <div class="grid-3 mt-12">
+                ${data.what_you_get.map(item => `
+                <div class="spec-card fade-in p-10 text-center">
+                    <div class="incub-feature-icon">${item.icon}</div>
+                    <h3 class="incub-feature-title">${item.title}</h3>
+                    <p class="incub-feature-desc">${item.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad-lg">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">HOW IT WORKS</h4>
+                <h2>From application to launch in 4 steps</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 50px;" class="incub-process-grid">
+                ${data.process.map(step => `
+                <div class="fade-in" style="text-align: center; padding: 30px;">
+                    <div class="incub-process-step">${step.step}</div>
+                    <h3 class="incub-process-title">${step.title}</h3>
+                    <p class="incub-process-desc">${step.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad-lg bg-darker">
+        <div class="container max-w-800">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">IDEAL CANDIDATE</h4>
+                <h2>${data.ideal_founder.title}</h2>
+            </div>
+            <div class="spec-card fade-in" style="padding: 50px; margin-top: 40px;">
+                <ul class="list-none p-0">
+                    ${data.ideal_founder.traits.map(t => `
+                    <li class="incub-trait-item">
+                        <span class="incub-trait-arrow">→</span>
+                        <span class="incub-trait-text">${t}</span>
+                    </li>`).join('')}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad">
+        <div class="container">
+            <div class="spec-card fade-in" style="padding: 80px 60px; text-align: center; border-radius: 30px; position: relative; overflow: hidden; margin-bottom: 40px;">
+                <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: var(--brand-gradient); filter: blur(150px); opacity: 0.15; border-radius: 50%;"></div>
+                <div style="position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px; background: var(--accent-glow); filter: blur(120px); opacity: 0.2; border-radius: 50%;"></div>
+                <h2 class="incub-cta-title">${data.cta.title}</h2>
+                <p class="incub-cta-desc">${data.cta.description}</p>
+                <a href="contact.html" class="btn-primary large" style="position: relative;">${data.cta.button_text}</a>
+            </div>
+            
+            ${data.external_cta ? `
+            <div class="spec-card fade-in" style="padding: 60px 40px; text-align: center; border-radius: 20px; border: 1px solid var(--border-light); background: var(--bg-card);">
+                <h3 class="incub-ext-title">${data.external_cta.title}</h3>
+                <p class="incub-ext-desc">${data.external_cta.description}</p>
+                <a href="${data.external_cta.button_href}" target="_blank" rel="noopener" class="btn-secondary">${data.external_cta.button_text}</a>
+            </div>
+            ` : ''}
+        </div>
+    </section>
+    `;
+}
+
+function renderCareers(data) {
+    return `
+    <section class="msme-hero service-hero-clean fade-in">
+        <div class="msme-hero-inner">
+            <div>
+                <div class="msme-badge">${data.header.subtitle}</div>
+                <h1>${data.header.title}</h1>
+                <p class="msme-hero-sub">${data.header.description}</p>
+                <div class="hero-cta-row">
+                    <a href="#openings" class="btn-primary large">View Open Positions</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="hero-trust-avatars">
+                        <span class="trust-avatar trust-avatar-1">T</span>
+                        <span class="trust-avatar trust-avatar-2">R</span>
+                        <span class="trust-avatar trust-avatar-3">A</span>
+                        <span class="trust-avatar trust-avatar-4">I</span>
+                    </div>
+                    <span class="hero-trust-text">Join <strong>12+ freelancers</strong> in our network</span>
+                </div>
+            </div>
+            <div class="hero-mockup service-hero-mockup">
+                <div class="service-hero-screenshot-wrap">
+                    <img src="${data.hero_image || 'assets/ui-mockups/hero_code_editor.png'}" alt="${data.hero_image_alt || 'Careers at Trai Inc'}" class="service-hero-screenshot" />
+                </div>
+                ${data.hero_cards ? data.hero_cards.map((c, i) => `
+                <div class="float-card float-card-${i+1}">
+                    <div class="fc-icon">${c.icon}</div>
+                    <div class="fc-label">${c.label}</div>
+                    <div class="fc-value ${c.active ? 'fc-value-active' : ''}">${c.value}</div>
+                </div>`).join('') : ''}
+            </div>
+        </div>
+    </section>
+
+    ${data.stats ? `
+    <section class="service-stats-section fade-in">
+        <div class="container service-stats-row">
+            ${data.stats.map(s => `<div>
+                <h3 class="service-stats-value">${s.value}</h3>
+                <p class="service-stats-label">${s.label}</p>
+            </div>`).join('')}
+        </div>
+    </section>` : ''}
+
+    <section class="container fade-in" style="padding: 80px 24px;">
+        <div class="section-header center">
+            <h4 class="mini-title">${data.values.subtitle}</h4>
+            <h2>${data.values.title}</h2>
+        </div>
+        <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            ${data.values.items.map(v => `
+            <div class="bento-card fade-in">
+                <div class="bento-icon">${v.icon}</div>
+                <h3 class="bento-title">${v.title}</h3>
+                <p class="bento-desc">${v.desc}</p>
+            </div>`).join('')}
+        </div>
+    </section>
+
+    <section class="container fade-in" style="padding: 40px 24px 80px;">
+        <div class="section-header center">
+            <h4 class="mini-title">${data.benefits.subtitle}</h4>
+            <h2>${data.benefits.title}</h2>
+        </div>
+        <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+            ${data.benefits.items.map(b => `
+            <div class="bento-card fade-in">
+                <div class="bento-icon">${b.icon}</div>
+                <h3 class="bento-title">${b.title}</h3>
+                <p class="bento-desc">${b.desc}</p>
+            </div>`).join('')}
+        </div>
+    </section>
+
+    <section id="openings" class="container fade-in" style="padding: 40px 24px 80px; scroll-margin-top: 80px;">
+        <div class="section-header center">
+            <h4 class="mini-title">${data.openings.title}</h4>
+        </div>
+
+        ${data.openings.sections.map(section => `
+        <div class="careers-opening-block">
+            <div class="careers-opening-header">
+                <h2 class="careers-opening-category">${section.category}</h2>
+                <p class="careers-opening-subtitle">${section.subtitle}</p>
+            </div>
+
+            <div class="careers-jobs-grid ${section.category.includes('Experts') ? 'experts-grid' : 'intern-grid'}">
+                ${section.jobs.map(job => `
+                <div class="bento-card fade-in careers-job-card">
+                    <div>
+                        <h3 class="careers-job-title">${job.title}</h3>
+                        <div class="careers-job-tags">
+                            <span class="careers-job-tag">${job.location}</span>
+                            <span class="careers-job-tag">${job.type}</span>
+                        </div>
+                        <p class="careers-job-desc">${job.desc}</p>
+                        
+                        ${job.tools ? `
+                        <div class="curriculum-section">
+                            <h4 class="curriculum-title">Core AI Tools</h4>
+                            <div class="tools-grid">
+                                ${job.tools.map(tool => `
+                                <div class="tool-item">
+                                    <img src="${tool.logo}" class="tool-logo" alt="${tool.name}" />
+                                    <span class="tool-name">${tool.name}</span>
+                                </div>`).join('')}
+                            </div>
+                        </div>` : ''}
+
+                        ${job.skills ? `
+                        <div class="curriculum-section" style="border-top: none; padding-top: 0; margin-top: 0;">
+                            <h4 class="curriculum-title">Skills you will Gain</h4>
+                            <div class="core-tools-list">
+                                ${job.skills.map(skill => `<span class="tool-chip">${skill}</span>`).join('')}
+                            </div>
+                        </div>` : ''}
+
+                        ${job.curriculum ? `
+                        <div class="curriculum-section" style="border-top: none; padding-top: 0; margin-top: 0;">
+                            <h4 class="curriculum-title">Certifications you will Earn</h4>
+                            <div class="curriculum-grid">
+                                ${job.curriculum.map(c => `
+                                <div class="course-card">
+                                    <img src="${c.logo}" class="course-logo" alt="${c.provider}" />
+                                    <div class="course-info">
+                                        <p class="course-name">${c.name}</p>
+                                        <p class="course-provider">${c.provider}</p>
+                                    </div>
+                                </div>`).join('')}
+                            </div>
+                        </div>` : ''}
+                        
+                        ${job.earned_badges ? `
+                        <div class="badges-section">
+                            <h4 class="curriculum-title">Badges Earned</h4>
+                            <div class="badges-list">
+                                ${job.earned_badges.map(b => `
+                                <div class="badge-earned">
+                                    <span class="badge-icon">⭐</span>
+                                    <span>${b}</span>
+                                </div>`).join('')}
+                            </div>
+                        </div>` : ''}
+                    </div>
+                    <div style="margin-top: 24px;">
+                        <a href="${job.button_href || 'mailto:careers@traiinc.com?subject=Job Application'}" class="btn-secondary" style="width: 100%; text-align: center;">${job.button_text || 'Apply Now'}</a>
+                    </div>
+                </div>`).join('')}
+            </div>
+
+            <div class="careers-apply-row">
+                <a href="${section.apply_link}" target="_blank" class="btn-primary large">${section.apply_text}</a>
+            </div>
+        </div>`).join('')}
+    </section>
+
+    ${renderFaq(data.faq)}
+
+    <section class="services-cta fade-in" style="padding: 80px 24px; text-align: center;">
+        <div class="container" style="background: var(--bg-darker); border-radius: 40px; padding: 80px 60px; border: 1px solid var(--bg-light); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: var(--brand-gradient); filter: blur(150px); opacity: 0.2; border-radius: 50%;"></div>
+            <h2 style="margin-bottom: 16px;">Ready to build with us?</h2>
+            <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 32px;">Join a network of elite freelancers shipping production code for India's fastest-growing companies.</p>
+            <a href="mailto:support@traiinc.com" class="btn-primary large">Send Your Portfolio →</a>
+        </div>
+    </section>
+    `;
+}
+function renderPartner(data) {
+    return `
+    <!-- ════════ HERO — SPLIT ════════ -->
+    <section class="ptr-hero">
+        <div class="ptr-hero-split">
+            <div class="ptr-hero-left">
+                <p class="ptr-hero-eyebrow">${data.header.eyebrow}</p>
+                <h1 class="ptr-hero-title">${data.header.title.replace(/\n/g, '<br>')}</h1>
+                <p class="ptr-hero-desc">${data.header.description}</p>
+                <a href="${data.header.cta_href}" class="btn-primary large ptr-hero-cta">${data.header.cta_text}</a>
+            </div>
+            <div class="ptr-hero-right">
+                <div class="ptr-hero-visual">
+                    <div class="ptr-hero-blob ptr-hero-blob-1"></div>
+                    <div class="ptr-hero-blob ptr-hero-blob-2"></div>
+                    <div class="ptr-hero-ring"></div>
+                    <div class="ptr-hero-stat-float ptr-hero-float-1">
+                        <span class="ptr-float-value">10–15%</span>
+                        <span class="ptr-float-label">Commission</span>
+                    </div>
+                    <div class="ptr-hero-stat-float ptr-hero-float-2">
+                        <span class="ptr-float-value">138+</span>
+                        <span class="ptr-float-label">Projects Delivered</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ TRUST BAR ════════ -->
+    <section class="ptr-trust-bar">
+        <div class="container">
+            <div class="ptr-trust-row">
+                ${data.trust.stats.map(s => `
+                <div class="ptr-trust-stat fade-in">
+                    <span class="ptr-trust-value">${s.value}</span>
+                    <span class="ptr-trust-label">${s.label}</span>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ VALUE PROPS ════════ -->
+    <section class="ptr-value">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.value.subtitle}</h4>
+                <h2>${data.value.title}</h2>
+                <p class="ptr-value-desc">${data.value.description}</p>
+            </div>
+            <div class="ptr-value-grid">
+                ${data.value.points.map(p => `
+                <div class="ptr-value-card fade-in">
+                    <div class="ptr-value-icon">${p.icon}</div>
+                    <h3 class="ptr-value-card-title">${p.title}</h3>
+                    <p class="ptr-value-card-desc">${p.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ PARTNERSHIP MODELS ════════ -->
+    <section id="models" class="ptr-models">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.models.subtitle}</h4>
+                <h2>${data.models.title}</h2>
+            </div>
+            <div class="ptr-models-grid">
+                ${data.models.tiers.map((t, i) => `
+                <div class="ptr-model-card fade-in${i === 0 ? ' ptr-model-featured' : ''}">
+                    ${t.badge ? `<span class="ptr-model-badge">${t.badge}</span>` : ''}
+                    <div class="ptr-model-icon">${t.icon}</div>
+                    <h3 class="ptr-model-title">${t.title}</h3>
+                    <p class="ptr-model-ideal">${t.ideal_for}</p>
+                    <p class="ptr-model-desc">${t.desc}</p>
+                    <ul class="ptr-model-benefits">
+                        ${t.benefits.map(b => `
+                        <li class="ptr-model-benefit">
+                            <span class="ptr-model-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5L5 9l4.5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                            <span>${b}</span>
+                        </li>`).join('')}
+                    </ul>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ TRUST SIGNALS ════════ -->
+    <section class="ptr-proof">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.proof.subtitle}</h4>
+                <h2>${data.proof.title}</h2>
+            </div>
+            <div class="ptr-proof-grid">
+                ${data.proof.items.map(p => `
+                <div class="ptr-proof-item fade-in">
+                    <span class="ptr-proof-metric">${p.metric}</span>
+                    <p class="ptr-proof-text">${p.text}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ IDEAL PARTNERS ════════ -->
+    <section class="ptr-ideal">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.ideal.subtitle}</h4>
+                <h2>${data.ideal.title}</h2>
+            </div>
+            <div class="ptr-ideal-grid">
+                ${data.ideal.list.map(item => `
+                <div class="ptr-ideal-item fade-in">
+                    <span class="ptr-ideal-icon">${item.icon}</span>
+                    <span class="ptr-ideal-text">${item.text}</span>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ PROCESS ════════ -->
+    <section class="ptr-process">
+        <div class="container">
+            <div class="section-header center fade-in">
+                <h4 class="mini-title">${data.process.subtitle}</h4>
+                <h2>${data.process.title}</h2>
+            </div>
+            <div class="ptr-process-track">
+                ${data.process.steps.map(s => `
+                <div class="ptr-process-step fade-in">
+                    <div class="ptr-process-dot"></div>
+                    <div class="ptr-process-card">
+                        <span class="ptr-process-number">${s.number}</span>
+                        <h3 class="ptr-process-title">${s.title}</h3>
+                        <p class="ptr-process-desc">${s.desc}</p>
+                    </div>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    ${renderFaq(data.faq)}
+
+    <!-- ════════ CTA ════════ -->
+    <section class="ptr-cta-section">
+        <div class="container">
+            <div class="ptr-cta-card fade-in">
+                <div class="ptr-cta-glow"></div>
+                <h2 class="ptr-cta-title">${data.cta.title}</h2>
+                <p class="ptr-cta-desc">${data.cta.description}</p>
+                <div class="ptr-cta-buttons">
+                    <a href="${data.cta.button_href}" target="_blank" class="btn-primary large">${data.cta.button_text}</a>
+                    <a href="${data.cta.whatsapp_href}" target="_blank" class="whatsapp-btn">${data.cta.whatsapp_text}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+function renderContact(data) {
+    return `
+    <!-- ═══ HERO ═══ -->
+    <section class="cf-hero-wrapper contact-hero-wrapper">
+        <div class="contact-hero-mesh" aria-hidden="true"></div>
+
+        <div class="cf-hero-content fade-in">
+            <div class="biz-badge contact-hero-badge">${data.hero.badge}</div>
+            <h1 class="contact-hero-title">${data.hero.title}</h1>
+            <p class="contact-hero-desc">${data.hero.description}</p>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT SPLIT SECTION ═══ -->
+    <section class="container fade-in contact-split-section">
+        <div class="contact-split">
+
+            <!-- Left Column — Contact Info -->
+            <div class="contact-info-card">
+                <h3>${data.info.title}</h3>
+
+                ${data.info.items.map(item => `
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon">${audienceIcons[item.icon_key] || ''}</div>
+                        <div class="contact-detail-text">
+                            <h4>${item.label}</h4>
+                            <p>${item.value}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- Right Column — Quick Actions -->
+            <div class="contact-form-card contact-form-card-flex">
+                <div class="contact-action-block">
+                    <div class="contact-action-icon">${audienceIcons.whatsapp}</div>
+                    <h3 class="contact-action-title">Chat on WhatsApp</h3>
+                    <p class="contact-action-desc">Message our founders directly — typical response in under 30 minutes during business hours.</p>
+                    <a href="${data.info.whatsapp_url}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn contact-action-btn">
+                        <span class="whatsapp-btn-icon">${audienceIcons.whatsapp}</span>
+                        Start Chat
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══ DETAILED FORM SECTION ═══ -->
+    <section class="container fade-in contact-form-section">
+        <div class="contact-form-wrapper">
+            <div class="contact-form-header">
+                <h3 class="contact-form-title">${data.form.title}</h3>
+                <p class="contact-form-note">${data.form.note}</p>
+            </div>
+            <form id="contactForm" action="/api/contact" method="POST" class="contact-form">
+                <!-- Honeypot field (hidden from legitimate users, filled by bots) -->
+                <input type="text" name="website_url" style="display:none" tabindex="-1" autocomplete="off">
+
+                <div class="contact-form-row">
+                    ${data.form.fields.slice(0, 2).map(f => `
+                        <div class="contact-field">
+                            <label for="${f.id}" class="contact-field-label">${f.label} ${f.required ? '<span class="contact-required">*</span>' : ''}</label>
+                            <input type="${f.type}" id="${f.id}" name="${f.name}" placeholder="${f.placeholder}" ${f.required ? 'required' : ''} class="contact-field-input">
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="contact-form-row">
+                    ${data.form.fields.slice(2, 4).map(f => `
+                        <div class="contact-field">
+                            <label for="${f.id}" class="contact-field-label">${f.label} ${f.required ? '<span class="contact-required">*</span>' : ''}</label>
+                            <input type="${f.type}" id="${f.id}" name="${f.name}" placeholder="${f.placeholder}" ${f.required ? 'required' : ''} class="contact-field-input">
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="contact-field">
+                    <label for="${data.form.budget.id}" class="contact-field-label">${data.form.budget.label} <span class="contact-required">*</span></label>
+                    <select id="${data.form.budget.id}" name="${data.form.budget.name}" required class="contact-field-input contact-field-select">
+                        ${data.form.budget.options.map(opt => `
+                            <option value="${opt.value}" ${opt.disabled ? 'disabled' : ''} ${opt.selected ? 'selected' : ''}>${opt.label}</option>
+                        `).join('')}
+                    </select>
+                </div>
+
+                ${data.form.services ? `
+                <div class="contact-field">
+                    <label class="contact-field-label">${data.form.services.label}</label>
+                    <div class="contact-services-grid">
+                        ${data.form.services.groups.map(group => `
+                            <div class="contact-services-group">
+                                <span class="contact-services-group-label">${group.label}</span>
+                                ${group.options.map(opt => `
+                                    <label class="contact-service-chip">
+                                        <input type="checkbox" name="services" value="${opt.value}">
+                                        <span class="contact-chip-text">${opt.label}</span>
+                                    </label>
+                                `).join('')}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
+
+                <div class="contact-field">
+                    <label for="${data.form.message.id}" class="contact-field-label">${data.form.message.label} <span class="contact-required">*</span></label>
+                    <textarea id="${data.form.message.id}" name="${data.form.message.name}" placeholder="${data.form.message.placeholder}" required class="contact-field-input contact-field-textarea"></textarea>
+                </div>
+
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAD8x-QU2EEmiGyft" data-action="turnstile-spin-v2" data-theme="auto"></div>
+
+                <button type="submit" id="contactSubmitBtn" class="btn-primary large contact-submit-btn">${data.form.button}</button>
+                <div id="formResult" style="display:none;margin-top:1rem;font-weight:500;"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ═══ GLOBAL OFFICES SECTION ═══ -->
+    <section class="contact-location-section">
+        <div class="container contact-location-container">
+            <div class="section-header center fade-in" style="margin-bottom: 44px;">
+                <h4 class="mini-title">Global Presence</h4>
+                <h2>Our Offices &amp; Studios</h2>
+                <p style="color: var(--text-muted); max-width: 640px; margin: 12px auto 0; font-size: var(--text-base);">From our engineering headquarters in India to regional delivery hubs across Africa, we are positioned to support clients globally.</p>
+            </div>
+            <div class="contact-offices-grid">
+                ${(data.offices || [
+                    { city: "Lucknow", country: "India", tag: "Headquarters", flag: "🇮🇳", address: "B-2, 11th Floor, DLF MyPad, Opposite Hyatt Regency, Vibhuti Khand, Gomti Nagar, Lucknow, UP 226010", hours: "Mon–Sat, 10am–7pm IST", map_url: "https://www.google.com/maps?q=Trai+Inc+Lucknow" },
+                    { city: "Bengaluru", country: "India", tag: "Tech Hub", flag: "🇮🇳", address: "660, 2nd Floor, 100 Feet Road, Indiranagar, Bengaluru – 560038", hours: "Mon–Sat, 10am–7pm IST", map_url: "https://www.google.com/maps?q=660+100+Feet+Road+Indiranagar+Bengaluru+560038" },
+                    { city: "Cape Town", country: "South Africa", tag: "Regional Office", flag: "🇿🇦", address: "WeWork, 80 Strand Street, Cape Town, WC 8001", hours: "Mon–Fri, 9am–6pm SAST", map_url: "https://www.google.com/maps?q=WeWork+80+Strand+Street+Cape+Town+8001" },
+                    { city: "Lusaka", country: "Zambia", tag: "Regional Office", flag: "🇿🇲", address: "Green Park Estate, Off Kafue Road, Lilayi, Lusaka 10101, Zambia", hours: "Mon–Fri, 8am–5pm CAT", map_url: "https://www.google.com/maps?q=Green+Park+Estate+Off+Kafue+Road+Lilayi+Lusaka+10101+Zambia" }
+                ]).map(office => `
+                <div class="contact-office-card fade-in">
+                    <div class="contact-office-card-top">
+                        <div class="contact-office-header">
+                            <span class="contact-office-flag">${office.flag || '📍'}</span>
+                            <div class="contact-office-titles">
+                                <h3 class="contact-office-city">${office.city}, <span class="contact-office-country">${office.country}</span></h3>
+                                <span class="contact-office-tag">${office.tag}</span>
+                            </div>
+                        </div>
+                        <p class="contact-office-addr">${office.address}</p>
+                    </div>
+                    <div class="contact-office-card-bottom">
+                        <span class="contact-location-badge"><span class="contact-badge-icon">${audienceIcons.clock}</span> ${office.hours}</span>
+                        <a href="${office.map_url}" target="_blank" rel="noopener noreferrer" class="contact-office-map-link">
+                            Directions <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+                        </a>
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ GRAND CTA ═══ -->
+    <section class="grand-cta fade-in">
+        <div class="container">
+            <div class="grand-cta-inner">
+                <h2>${data.grand_cta.title}</h2>
+                <p>${data.grand_cta.description}</p>
+                <a href="${data.grand_cta.url}" target="_blank" class="btn-primary contact-grand-cta-btn">${data.grand_cta.button_text}</a>
+            </div>
+        </div>
+    </section>
+    `;
+}
+function renderSolutions(data) {
+    return `
+    <section class="cf-hero-wrapper solutions-hero-wrapper">
+        <div class="solutions-hero-mesh" aria-hidden="true"></div>
+        <div class="cf-hero-content fade-in">
+            <h4 class="mini-title">${data.header.subtitle}</h4>
+            <h1 class="solutions-header-title">${data.header.title.replace('modern businesses', '<em class="hero-cosmos-ai">modern businesses</em>')}</h1>
+            <p class="solutions-header-desc">${data.header.description}</p>
+        </div>
+    </section>
+
+    ${data.categories.map((cat, ci) => `
+    <section class="${ci % 2 !== 0 ? 'cap-section-alt' : 'cap-section'} fade-in" id="${cat.id}" style="${ci % 2 !== 0 ? 'padding: 80px 0; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);' : 'padding: 80px 0;'}">
+        <div class="container">
+            <div class="section-header">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div class="cap-cell-icon">${audienceIcons[cat.icon_key] || ''}</div>
+                    <h2 class="text-4xl" style="margin: 0; font-family: var(--font-heading); font-weight: 700;">${cat.title}</h2>
+                </div>
+                <p style="color: var(--text-muted); max-width: 650px;">${cat.desc}</p>
+                ${cat.tech_stack && cat.tech_stack.length > 0 ? `
+                <div class="solutions-tech-row">
+                    ${cat.tech_stack.map(t => `<div class="solutions-tech-pill">${getTechLogo(t)}<span>${t}</span></div>`).join('')}
+                </div>` : ''}
+            </div>
+            <div class="bento-grid" style="margin-top: 40px;">
+                ${cat.services.map(s => `
+                <a href="${s.href}" class="bento-card fade-in" style="text-decoration: none; display: flex; flex-direction: column;">
+                    <div style="flex-grow: 1;">
+                        <h3 class="bento-title">${s.name}</h3>
+                        <p class="bento-desc">${s.desc}</p>
+                    </div>
+                    <div style="margin-top: 20px; font-weight: 600; color: var(--accent-color); ">Explore →</div>
+                </a>`).join('')}
+            </div>
+            <div class="solutions-cat-cta-row">
+                <a href="${cat.href}" class="btn-secondary solutions-cat-link">Explore ${cat.title} →</a>
+            </div>
+        </div>
+    </section>`).join('')}
+
+    ${data.guarantee ? `
+    <section class="solutions-guarantee fade-in">
+        <div class="container">
+            <h2 class="solutions-guarantee-title">${data.guarantee.title}</h2>
+            <div class="solutions-guarantee-grid">
+                ${data.guarantee.items.map(g => `
+                <div class="solutions-guarantee-card">
+                    <div class="solutions-guarantee-icon">${audienceIcons[g.icon_key] || ''}</div>
+                    <h3>${g.title}</h3>
+                    <p>${g.desc}</p>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>` : ''}
+
+    <section class="solutions-cta fade-in">
+        <div class="container solutions-cta-inner">
+            <div class="solutions-cta-glow"></div>
+            <h2 class="solutions-cta-title">${data.cta.title}</h2>
+            <p class="solutions-cta-desc">${data.cta.description}</p>
+            <a href="contact.html" class="btn-primary large">${data.cta.button_text}</a>
+        </div>
+    </section>
+    `;
+}
+
+function renderIndustries(data) {
+    const statsHtml = data.stats ? `
+    <section class="service-stats-section fade-in">
+        <div class="container service-stats-row">
+            ${data.stats.map(s => `<div>
+                <h3 class="service-stats-value">${s.value}</h3>
+                <p class="service-stats-label">${s.label}</p>
+            </div>`).join('')}
+        </div>
+    </section>` : '';
+
+    const benefitsHtml = data.benefits ? `
+    <section class="container fade-in" style="padding: 80px 24px;">
+        <div class="section-header center">
+            <h4 class="mini-title">WHY TRAI INC</h4>
+            <h2>Our Industry Advantage</h2>
+        </div>
+        <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            ${data.benefits.map(b => `
+            <div class="bento-card fade-in">
+                <div class="bento-icon">${b.icon}</div>
+                <h3 class="bento-title">${b.title}</h3>
+                <p class="bento-desc">${b.description}</p>
+            </div>`).join('')}
+        </div>
+    </section>` : '';
+
+    return `
+    <header class="page-header container fade-in" style="padding: 110px 24px 56px; text-align: center; max-width: 900px; margin: 0 auto;">
+        <h4 class="mini-title">${data.hero.mini_title}</h4>
+        <h1 class="ind-hero-title">${data.hero.title}</h1>
+        <p class="ind-hero-desc">${data.hero.description}</p>
+    </header>
+
+    ${statsHtml}
+
+    <section class="container" style="padding: 60px 24px;">
+        <div class="section-header center fade-in">
+            <h4 class="mini-title">VERTICALS</h4>
+            <h2>Sectors We Specialize In</h2>
+        </div>
+        <div class="grid-2" style="gap: 32px;">
+            ${data.industries.map(ind => `
+            <div id="${ind.id}" class="spec-card fade-in" style="padding: 44px; position: relative; border: 1px solid var(--border-light); background: var(--bg-card); scroll-margin-top: 100px;">
+                <div class="ind-card-icon">${ind.icon}</div>
+                <h3 class="ind-card-title">${ind.name}</h3>
+                <p class="ind-card-desc">${ind.desc}</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+                    ${ind.features.map(f => `<div class="ind-feature-item"><span class="ind-feature-check">✔</span> ${f}</div>`).join('')}
+                </div>
+                ${ind.link ? `
+                <div style="margin-top: 24px;">
+                    <a href="${ind.link}" class="btn-primary" style="padding: 9px 20px;  display: inline-block;">
+                        Explore Lucknow Solutions &rarr;
+                    </a>
+                </div>` : ''}
+            </div>`).join('')}
+        </div>
+    </section>
+
+    ${benefitsHtml}
+
+    ${renderFaq(data.faq)}
+
+    <section class="services-cta fade-in" style="padding: 100px 24px; text-align: center;">
+        <div class="container" style="background: var(--bg-darker); border-radius: 40px; padding: 100px 60px; border: 1px solid var(--bg-light); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: var(--brand-gradient); filter: blur(150px); opacity: 0.2; border-radius: 50%;"></div>
+            <h2 class="ind-cta-title">${data.cta.title}</h2>
+            <p class="ind-cta-desc">${data.cta.description}</p>
+            <a href="contact.html" class="btn-primary large">${data.cta.button_text}</a>
+        </div>
+    </section>
+    `;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+
+function initAnimations() {
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+function renderClients(data) {
+    return `
+    <header class="page-header clients-header">
+        <h4 class="mini-title fade-in">OUR CLIENTS</h4>
+        <h1 class="main-heading fade-in clients-header-title">Trusted by 138+ <em class="hero-cosmos-ai">Businesses</em></h1>
+        <p class="fade-in clients-header-desc">From local MSMEs to enterprise operations, we've delivered scalable solutions across 12+ industries.</p>
+    </header>
+
+    <section class="clients-stats-section">
+        <div class="container">
+            <div class="clients-stats-banner fade-in">
+                ${data.stats.map(s => `
+                <div class="clients-stats-banner-col">
+                    <div class="clients-stats-value">${s.value}</div>
+                    <div class="clients-stats-label">${s.label}</div>
+                </div>`).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ DEEP DIVE CASE STUDIES ════════ -->
+    <section class="case-studies-index">
+        ${data.case_studies.map((cs, i) => {
+            const isReversed = i % 2 !== 0;
+            return `
+            <div class="content-section fade-in ${isReversed ? 'home-section-shaded' : ''}">
+                <div class="container">
+                    <div class="case-study-alternating-row ${isReversed ? 'reversed' : ''}">
+                        <div class="conversion-left" style="${isReversed ? 'order: 2;' : ''}">
+                            <div class="case-study-logo-container">
+                                <img src="${cs.image}" alt="${cs.client} logo" loading="lazy" />
+                            </div>
+                        </div>
+                        <div class="conversion-right" style="${isReversed ? 'order: 1;' : ''}">
+                            <div class="mini-title mb-3 letter-spacing-wide font-bold uppercase">${cs.tag}</div>
+                            <h2 class="text-4xl mb-6">${cs.client}</h2>
+                            <p class="text-lg text-muted mb-8 leading-tight">${cs.description}</p>
+                            <a href="${cs.link}" class="btn-primary">Read full case study &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }).join('')}
+    </section>
+
+
+    `;
+}
+
+function renderAudiencePage(data) {
+    const { hero, feature_pills, services, industries, cta } = data;
+    
+    // Set custom properties for accent colors on the document root
+    if (hero.accent_colors) {
+        document.documentElement.style.setProperty('--cf-accent-1', hero.accent_colors.primary);
+        document.documentElement.style.setProperty('--cf-accent-2', hero.accent_colors.secondary);
+    }
+
+    let complianceHtml = '';
+    if (data.compliance && data.compliance.items && data.compliance.items.length > 0) {
+        complianceHtml = `
+        <section class="container fade-in content-section">
+            <div class="section-header">
+                <h4 class="mini-title">${data.compliance.subtitle}</h4>
+                <h2>${data.compliance.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${data.compliance.items.map(item => `
+                    <div class="bento-card fade-in">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let enterpriseCtaHtml = '';
+    if (data.enterprise_cta) {
+        const ec = data.enterprise_cta;
+        enterpriseCtaHtml = `
+        <section class="container fade-in content-section">
+            <div class="biz-cta">
+                <div class="biz-cta-glow"></div>
+                <h2>${ec.title}</h2>
+                <p>${ec.description}</p>
+                <div class="hero-cta-row">
+                    <a href="mailto:${ec.email}?subject=${encodeURIComponent(ec.subject)}" class="btn-primary large">✉️ ${ec.email}</a>
+                </div>
+                ${ec.process ? `
+                <div class="enterprise-process-grid">
+                    ${ec.process.map((step, i) => `
+                        <div class="enterprise-process-step">
+                            <div class="enterprise-process-step-label">Step ${i + 1}</div>
+                            <div class="enterprise-process-step-text">${step}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+            </div>
+        </section>
+        `;
+    }
+
+    let industriesHtml = '';
+    if (industries && industries.length > 0) {
+        industriesHtml = `
+        <section class="container fade-in content-section">
+            <div class="section-header">
+                <h4 class="mini-title">INDUSTRIES</h4>
+                <h2>Where we excel</h2>
+            </div>
+            <div class="bento-grid">
+                ${industries.map(ind => `
+                    <div class="bento-card fade-in">
+                        <div class="bento-icon">${ind.icon}</div>
+                        <h3>${ind.title}</h3>
+                        <p>${ind.desc}</p>
+                        <div class="audience-industry-features">
+                            ${ind.features ? ind.features.map(f => `<div>✓ ${f}</div>`).join('') : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let proofHtml = '';
+    if (data.proof && data.proof.studies && data.proof.studies.length > 0) {
+        proofHtml = `
+        <section class="content-section fade-in home-section-shaded home-section-bordered-top">
+            <div class="container">
+                <div class="section-header center">
+                    <h4 class="mini-title">${data.proof.subtitle}</h4>
+                    <h2>${data.proof.title}</h2>
+                </div>
+                <div class="grid-3 home-grid-spaced">
+                    ${data.proof.studies.map(s => `
+                    <div class="spec-card fade-in home-accent-card" style="--card-accent: ${s.color};">
+                        <p class="home-accent-eyebrow">${s.client}</p>
+                        <h3 class="home-card-title">${s.title}</h3>
+                        <p class="home-card-body">${s.impact}</p>
+                        <div class="home-tag-row">
+                            ${s.tags.map(t => `<span class="home-tag">${t}</span>`).join('')}
+                        </div>
+                    </div>`).join('')}
+                </div>
+            </div>
+        </section>
+        `;
+    }
+
+    return `
+        <!-- HERO -->
+        <section class="msme-hero">
+            <div class="msme-hero-inner">
+                <div>
+                    <div class="msme-badge">${hero.page_label}</div>
+                    <h1>${hero.title}</h1>
+                    <p class="msme-hero-sub">${hero.subtitle}</p>
+                    <div class="hero-cta-row">
+                        <a href="contact.html" class="btn-primary large">${hero.cta_text || 'Get in Touch'}</a>
+                    </div>
+                    <div class="hero-trust">
+                        <div class="hero-trust-avatars">
+                            ${hero.trust.avatars.map((av, i) => `<span class="trust-avatar trust-avatar-${i+1}">${av}</span>`).join('')}
+                        </div>
+                        <span>Trusted by <strong class="trust-count">${hero.trust.count}</strong></span>
+                    </div>
+                </div>
+                <div class="hero-mockup">
+                    <div class="mockup-main">
+                        <div class="mockup-bar"><span></span><span></span><span></span></div>
+                        <div class="mockup-metrics">
+                            ${hero.mockup.metrics.map(m => `
+                                <div class="mockup-metric">
+                                    <div class="mockup-metric-label">${m.label}</div>
+                                    <div class="mockup-metric-value ${m.color || ''}">${m.value}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mockup-chart"></div>
+                    </div>
+                    ${hero.mockup.cards.map((c, i) => `
+                        <div class="float-card float-card-${i+1}">
+                            <div class="fc-icon">${c.icon}</div>
+                            <div class="fc-label">${c.label}</div>
+                            <div class="fc-value ${c.active ? 'fc-value-active' : ''}">${c.value}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE PILLS -->
+        <section class="container fade-in section-pills">
+            <div class="feature-pills">
+                ${feature_pills.map(pill => `<div class="feature-pill">${pill}</div>`).join('')}
+            </div>
+        </section>
+
+        <!-- PROOF -->
+        ${proofHtml}
+
+        <!-- SERVICES -->
+        <section class="container fade-in content-section">
+            <div class="section-header">
+                <h4 class="mini-title">${services.subtitle}</h4>
+                <h2>${services.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${services.items.map((item, index) => `
+                    <div class="bento-card ${index === 0 || index === 3 ? 'wide' : ''} fade-in">
+                        <div class="bento-icon">${item.icon}</div>
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+
+        <!-- INDUSTRIES -->
+        ${industriesHtml}
+
+        <!-- COMPLIANCE -->
+        ${complianceHtml}
+
+        <!-- ENTERPRISE CTA -->
+        ${enterpriseCtaHtml}
+
+        <!-- CTA -->
+        <section class="container fade-in biz-cta-section">
+            <div class="biz-cta">
+                <div class="biz-cta-glow"></div>
+                <h2>${cta.title}</h2>
+                <p>${cta.description}</p>
+                <div class="hero-cta-row">
+                    <a href="contact.html" class="btn-primary large">${cta.button_text}</a>
+                    <a href="contact.html" class="btn-secondary large">✉️ Send a Message</a>
+                </div>
+            </div>
+        </section>
+    `;
+}
+
+function renderD2C(data) {
+    return `
+        <!-- HERO -->
+        <section class="msme-hero">
+            <div class="msme-hero-inner">
+                <div class="fade-in">
+                    <div class="msme-badge">${data.hero.badge || '⚡ ONDC CONNECTED • BHARAT D2C ACCELERATOR'}</div>
+                    <h1>${data.hero.title}</h1>
+                    <p class="msme-hero-sub">${data.hero.desc || data.hero.subtitle || ''}</p>
+                    
+                    ${data.hero.highlights ? `
+                    <div class="d2c-hero-highlights">
+                        ${data.hero.highlights.map(h => `
+                            <div class="d2c-hero-highlight-item">
+                                <span class="d2c-highlight-icon">${h.icon}</span>
+                                <span class="d2c-highlight-text">${h.text}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+
+                    <div class="hero-cta-row">
+                        <a href="${data.hero.cta.primary.url}" ${data.hero.cta.primary.url.startsWith('http') ? 'target="_blank"' : ''} class="btn-primary large">${data.hero.cta.primary.text}</a>
+                        <a href="${data.hero.cta.secondary.url}" ${data.hero.cta.secondary.url.startsWith('http') ? 'target="_blank"' : ''} class="btn-secondary large">${data.hero.cta.secondary.text}</a>
+                    </div>
+                    <div class="hero-trust">
+                        <div class="hero-trust-avatars">
+                            ${data.hero.trust.avatars.map((av, i) => `<span class="trust-avatar trust-avatar-${i+1}">${av}</span>`).join('')}
+                        </div>
+                        <span>Trusted by <strong class="trust-count">${data.hero.trust.count}</strong> across India</span>
+                    </div>
+                </div>
+
+                <!-- Hero Visual — Interactive E-Commerce & ONDC Live Hub Mockup -->
+                <div class="hero-mockup fade-in">
+                    <div class="mockup-main d2c-hub-card">
+                        <div class="mockup-bar">
+                            <div class="mockup-dots"><span></span><span></span><span></span></div>
+                            <div class="mockup-url-pill"><span>🔒</span> store.yourbrand.in <span class="badge-live-pulse">🟢 LIVE & ONDC SYNCED</span></div>
+                        </div>
+                        
+                        <!-- Top Storefront Header Card -->
+                        <div class="d2c-mockup-storefront">
+                            <div class="d2c-mockup-store-info">
+                                <div class="d2c-mockup-avatar">🏪</div>
+                                <div>
+                                    <div class="d2c-mockup-store-title">Bharat D2C Storefront</div>
+                                    <div class="d2c-mockup-store-meta">Pan-India Delivery • 1-Click UPI • ONDC Node</div>
+                                </div>
+                            </div>
+                            <div class="d2c-mockup-badge-fast">⚡ 0.8s PWA Speed</div>
+                        </div>
+
+                        <!-- 4-Stat Metric Grid -->
+                        <div class="d2c-stats-grid">
+                            <div class="d2c-stat-box">
+                                <div class="d2c-stat-label">Monthly GMV</div>
+                                <div class="d2c-stat-val green">₹18.4L <span class="d2c-stat-up">↑44%</span></div>
+                            </div>
+                            <div class="d2c-stat-box">
+                                <div class="d2c-stat-label">Orders Processed</div>
+                                <div class="d2c-stat-val">1,420 <span class="d2c-stat-sub">Units</span></div>
+                            </div>
+                            <div class="d2c-stat-box">
+                                <div class="d2c-stat-label">Commission Paid</div>
+                                <div class="d2c-stat-val gold">₹0 <span class="d2c-stat-sub">100% Margin</span></div>
+                            </div>
+                            <div class="d2c-stat-box">
+                                <div class="d2c-stat-label">Avg Dispatch SLA</div>
+                                <div class="d2c-stat-val green">&lt; 4 Hours</div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Live Activity Feed -->
+                        <div class="d2c-live-feed">
+                            <div class="d2c-feed-title">
+                                <span class="d2c-pulse-dot"></span> Live Channel Stream
+                            </div>
+                            <div class="d2c-feed-item">
+                                <span class="d2c-feed-tag ondc">ONDC</span>
+                                <span class="d2c-feed-msg">New Order #9842 (₹2,499) via Paytm Buyer App • Bangalore</span>
+                            </div>
+                            <div class="d2c-feed-item">
+                                <span class="d2c-feed-tag ship">LOGISTICS</span>
+                                <span class="d2c-feed-msg">Delhivery pickup auto-scheduled • Live tracking on WhatsApp</span>
+                            </div>
+                            <div class="d2c-feed-item">
+                                <span class="d2c-feed-tag wa">AI BOT</span>
+                                <span class="d2c-feed-msg">Trai WhatsApp Agent recovered ₹3,850 abandoned cart in Pune</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Accent Badges -->
+                    <div class="float-card float-card-1 d2c-float-card">
+                        <div class="fc-icon">🌐</div>
+                        <div class="fc-label">Buyer Discovery</div>
+                        <div class="fc-value fc-value-active">10Cr+ on ONDC</div>
+                    </div>
+                    <div class="float-card float-card-2 d2c-float-card">
+                        <div class="fc-icon">📦</div>
+                        <div class="fc-label">Multi-Courier Reach</div>
+                        <div class="fc-value">28,000+ Pin Codes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METRICS RIBBON -->
+        ${data.metrics_ribbon ? `
+        <section class="container fade-in" style="margin-top: -30px; margin-bottom: 50px; position: relative; z-index: 10;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: var(--bg-card); padding: 28px; border-radius: 20px; border: 1px solid var(--border-light); box-shadow: var(--shadow-md);">
+                ${data.metrics_ribbon.map(m => `
+                    <div style="text-align: center;">
+                        <div style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: 800; color: var(--accent-color);">${m.val}</div>
+                        <div style="color: var(--text-muted); font-weight: 600; margin-top: 4px;">${m.label}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- FEATURE PILLS -->
+        <section class="container fade-in msme-section-tight-top">
+            <h2 class="msme-section-heading">Everything You Need to Scale D2C</h2>
+            <div class="feature-pills">
+                ${data.feature_pills.map(pill => `<div class="feature-pill">${pill}</div>`).join('')}
+            </div>
+        </section>
+
+        <!-- BENTO SERVICE GRID -->
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header">
+                <h4 class="mini-title">${data.services.subtitle}</h4>
+                <h2>${data.services.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${data.services.items.map((item, idx) => `
+                    <div class="bento-card ${idx === 0 || idx === 3 ? 'wide' : ''} fade-in">
+                        <div class="bento-icon">${item.icon}</div>
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+
+        <!-- MULTI-CATEGORY D2C STRIP -->
+        ${data.categories_strip ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title">${data.categories_strip.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.categories_strip.title}</h2>
+            </div>
+            <div class="d2c-categories-grid">
+                ${data.categories_strip.items.map((cat, idx) => `
+                    <div class="d2c-category-card fade-in">
+                        <div class="d2c-category-media">
+                            <img src="${cat.image}" alt="${cat.title}" loading="lazy" />
+                            ${cat.tag ? `<span class="d2c-category-tag">${cat.tag}</span>` : ''}
+                        </div>
+                        <div class="d2c-category-body">
+                            <h3>${cat.title}</h3>
+                            <p>${cat.desc}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- TRENDING CATEGORIES (HOT PICKS ACROSS EVERY CATEGORY) -->
+        ${data.trending_categories ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title" style="color: #ec4899;">${data.trending_categories.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.trending_categories.title}</h2>
+                <p style="max-width: 680px; margin: 12px auto 0; color: var(--text-muted);">${data.trending_categories.desc}</p>
+            </div>
+            <div class="d2c-trending-grid">
+                ${data.trending_categories.items.map(item => `
+                    <div class="d2c-trending-item">
+                        <div class="d2c-trending-circle">
+                            <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                        </div>
+                        <span class="d2c-trending-label">${item.title}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- ALL CATEGORIES MATRIX DIRECTORY -->
+        ${data.category_matrix ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title" style="color: var(--accent-color);">${data.category_matrix.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.category_matrix.title}</h2>
+                <p style="max-width: 680px; margin: 12px auto 0; color: var(--text-muted);">${data.category_matrix.desc}</p>
+            </div>
+            <div class="d2c-category-matrix-grid">
+                ${data.category_matrix.categories.map(cat => `
+                    <div class="d2c-matrix-card">
+                        <div class="d2c-matrix-header">
+                            <div class="d2c-matrix-icon">
+                                <img src="${cat.icon}" alt="${cat.name}" loading="lazy" />
+                            </div>
+                            <div class="d2c-matrix-title">${cat.name}</div>
+                        </div>
+                        <ul class="d2c-matrix-list">
+                            ${cat.items.map(sub => `
+                                <li class="d2c-matrix-item">${sub}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- IMAGE SHOWCASE (SELLER PLATFORM IN ACTION) -->
+        ${data.image_showcase ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="d2c-video-section">
+                <div class="d2c-video-inner">
+                    <div class="d2c-video-player-box">
+                        <img src="${data.image_showcase.image}" alt="${data.image_showcase.image_alt || ''}" loading="lazy" class="d2c-showcase-hero-img" />
+                    </div>
+                    <div class="d2c-video-content">
+                        <h4 class="mini-title">${data.image_showcase.subtitle}</h4>
+                        <h2 class="text-3xl mt-2 mb-3">${data.image_showcase.title}</h2>
+                        <p style="color: var(--text-muted); line-height: 1.7; ">${data.image_showcase.desc}</p>
+                        
+                        <div class="d2c-video-stats-grid">
+                            ${data.image_showcase.stats.map(s => `
+                                <div class="d2c-video-stat-item">
+                                    <div class="d2c-video-stat-val">${s.val}</div>
+                                    <div class="d2c-video-stat-lbl">${s.label}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- PLATFORM SHOWCASE (D2C & ONDC COMMERCE ENGINE) -->
+        ${data.showcase ? `
+        <section id="showcase" class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title">${data.showcase.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.showcase.title}</h2>
+                <p style="max-width: 680px; margin: 12px auto 0; color: var(--text-muted);">${data.showcase.desc}</p>
+            </div>
+            <div class="d2c-showcase-grid">
+                ${data.showcase.items.map((item, idx) => `
+                    <div class="d2c-showcase-card fade-in">
+                        <div class="d2c-showcase-media">
+                            <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                            ${item.tag ? `<span class="d2c-showcase-tag">${item.tag}</span>` : ''}
+                        </div>
+                        <div class="d2c-showcase-body">
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- REGIONAL & STATE-WISE HERITAGE SHOWCASE -->
+        ${data.heritage_showcase ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title" style="color: #ec4899;">${data.heritage_showcase.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.heritage_showcase.title}</h2>
+                <p style="max-width: 680px; margin: 12px auto 0; color: var(--text-muted);">${data.heritage_showcase.desc}</p>
+            </div>
+            <div class="d2c-heritage-grid">
+                ${data.heritage_showcase.items.map(item => `
+                    <div class="d2c-heritage-card">
+                        <img src="${item.image}" alt="${item.title}" loading="lazy" class="d2c-heritage-img" />
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- OLD WAY vs TRAI WAY -->
+        <section class="compare-section fade-in">
+            <div class="container">
+                <div class="section-header center">
+                    <h4 class="mini-title">${data.comparison.subtitle}</h4>
+                    <h2>${data.comparison.title}</h2>
+                </div>
+                <div class="compare-grid">
+                    <div class="compare-col compare-old">
+                        <h3>${data.comparison.old_way.title}</h3>
+                        ${data.comparison.old_way.items.map(i => `<div class="compare-item"><span class="ci-icon">❌</span> ${i}</div>`).join('')}
+                    </div>
+                    <div class="compare-vs"><span>VS</span></div>
+                    <div class="compare-col compare-new">
+                        <h3>${data.comparison.new_way.title}</h3>
+                        ${data.comparison.new_way.items.map(i => `<div class="compare-item"><span class="ci-icon">✅</span> ${i}</div>`).join('')}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING PACKAGES -->
+        ${data.pricing ? `
+        <section class="container fade-in msme-section-loose-top">
+            <div class="section-header center">
+                <h4 class="mini-title">${data.pricing.subtitle}</h4>
+                <h2 class="text-4xl mt-2">${data.pricing.title}</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 48px;">
+                ${data.pricing.packages.map(pkg => `
+                    <div class="spec-card fade-in" style="padding: 36px 30px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; ${pkg.popular ? 'border: 2px solid var(--accent-color); box-shadow: var(--shadow-lg);' : ''}">
+                        ${pkg.popular ? `<span style="position: absolute; top: -12px; right: 24px; background: var(--accent-color); color: #fff;  font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase;">MOST POPULAR</span>` : ''}
+                        <div>
+                            <h3 style=" font-weight: 700; margin-bottom: 8px; color: var(--text-main);">${pkg.name}</h3>
+                            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px;">
+                                <span style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: 700; color: var(--accent-color);">${pkg.price}</span>
+                                <span style="font-size: var(--text-xs); color: var(--text-muted);">${pkg.period}</span>
+                            </div>
+                            <p style=" color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">${pkg.desc}</p>
+                            <div style="border-top: 1px solid var(--border-light); padding-top: 20px; margin-bottom: 28px;">
+                                ${pkg.features.map(f => `
+                                    <div style="display: flex; align-items: flex-start; gap: 10px;  color: var(--text-main); margin-bottom: 12px;">
+                                        <span style="color: var(--accent-color); font-weight: bold;">✔</span>
+                                        <span>${f}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <a href="https://wa.me/917905495478?text=${encodeURIComponent(`Hi Trai Inc, I am interested in the ${pkg.name} (${pkg.price}) for my retail business.`)}" target="_blank" class="${pkg.popular ? 'btn-primary' : 'btn-secondary'} large" style="text-align: center; justify-content: center; width: 100%;">
+                            Get Started with ${pkg.name.split(' ')[1] || 'Package'} &rarr;
+                        </a>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        ` : ''}
+
+        <!-- INLINE COST ESTIMATOR -->
+        <section id="estimator" class="estimator-section fade-in">
+            <div class="container">
+                <div class="estimator-card">
+                    <div class="estimator-left">
+                        <h4 class="mini-title">${data.estimator.subtitle}</h4>
+                        <h2>${data.estimator.title}</h2>
+                        <p>${data.estimator.desc}</p>
+                        <div class="msme-estimator-bullets">
+                            ${data.estimator.bullets.map(b => `
+                                <div class="msme-estimator-bullet">
+                                    <span class="msme-estimator-check">✔</span> ${b}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <form id="estimatorForm" class="estimator-form" action="/api/contact" method="POST">
+                            <!-- Honeypot field (hidden from legitimate users, filled by bots) -->
+                            <input type="text" name="website_url" style="display:none" tabindex="-1" autocomplete="off">
+                            <label>What do you need built?</label>
+                            <select id="calcType" name="service_type" required>
+                                ${data.estimator.options.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('')}
+                            </select>
+
+                            <label>Do you need user logins?</label>
+                            <select id="calcLogin" name="needs_login" required>
+                                <option value="no">No</option>
+                                <option value="yes">Yes (+₹20K)</option>
+                            </select>
+
+                            <label>Your Name</label>
+                            <input type="text" name="name" required placeholder="Your name">
+
+                            <label>WhatsApp Number</label>
+                            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX">
+
+                            <button type="button" class="btn-primary large msme-btn-block" onclick="calculateEstimate()">Calculate Estimate</button>
+                        </form>
+
+                        <div id="estimateResult" class="estimator-result">
+                            <h3 id="estimatePrice">₹0</h3>
+                            <p>Estimated starting cost. We'll WhatsApp you a detailed quote!</p>
+                            <button type="submit" form="estimatorForm" class="btn-primary msme-btn-spaced">📩 Send Me the Quote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRAND CTA -->
+        <section class="grand-cta fade-in">
+            <div class="container">
+                <div class="grand-cta-inner">
+                    <h2>Ready to Scale Your Offline Store to Pan-India D2C?</h2>
+                    <p>Schedule a free technical & growth consultation with our e-commerce engineering team.</p>
+                    <a href="https://wa.me/917905495478?text=${encodeURIComponent('Hi Trai Inc, I want to transform my retail store into a pan-India D2C brand.')}" target="_blank" class="btn-primary large">Book Free D2C Consultation &rarr;</a>
+                </div>
+            </div>
+        </section>
+    `;
+}
+
+const renderMSME = renderD2C;
+
+const deviconMap = {
+    'flutter': 'flutter/flutter-original.svg',
+    'react native': 'react/react-original.svg',
+    'react': 'react/react-original.svg',
+    'next.js': 'nextjs/nextjs-original.svg',
+    'node.js': 'nodejs/nodejs-original.svg',
+    'typescript': 'typescript/typescript-original.svg',
+    'javascript': 'javascript/javascript-original.svg',
+    'python': 'python/python-original.svg',
+    'dart': 'dart/dart-original.svg',
+    'swift': 'swift/swift-original.svg',
+    'swiftui': 'swift/swift-original.svg',
+    'kotlin': 'kotlin/kotlin-original.svg',
+    'java': 'java/java-original.svg',
+    'go': 'go/go-original.svg',
+    'rust': 'rust/rust-original.svg',
+    'xcode': 'xcode/xcode-original.svg',
+    'jetpack compose': 'android/android-original.svg',
+    'android studio': 'androidstudio/androidstudio-original.svg',
+    'firebase': 'firebase/firebase-plain.svg',
+    'postgresql': 'postgresql/postgresql-original.svg',
+    'mongodb': 'mongodb/mongodb-original.svg',
+    'mysql': 'mysql/mysql-original.svg',
+    'redis': 'redis/redis-original.svg',
+    'aws': 'amazonwebservices/amazonwebservices-original-wordmark.svg',
+    'google cloud': 'googlecloud/googlecloud-original.svg',
+    'azure': 'azure/azure-original.svg',
+    'docker': 'docker/docker-original.svg',
+    'kubernetes': 'kubernetes/kubernetes-plain.svg',
+    'terraform': 'terraform/terraform-original.svg',
+    'github actions': 'github/github-original.svg',
+    'git': 'git/git-original.svg',
+    'jenkins': 'jenkins/jenkins-original.svg',
+    'fastapi': 'fastapi/fastapi-original.svg',
+    'django': 'django/django-plain.svg',
+    'graphql': 'graphql/graphql-plain.svg',
+    'pytorch': 'pytorch/pytorch-original.svg',
+    'tensorflow': 'tensorflow/tensorflow-original.svg',
+    'figma': 'figma/figma-original.svg',
+    'wordpress': 'wordpress/wordpress-plain.svg',
+    'woocommerce': 'woocommerce/woocommerce-original.svg',
+    'electron': 'electron/electron-original.svg',
+    'dotnet': 'dotnetcore/dotnetcore-original.svg',
+    '.net': 'dotnetcore/dotnetcore-original.svg',
+    'android': 'android/android-original.svg',
+    'apple': 'apple/apple-original.svg',
+    'linux': 'linux/linux-original.svg',
+    'nginx': 'nginx/nginx-original.svg',
+    'prometheus': 'prometheus/prometheus-original.svg',
+    'grafana': 'grafana/grafana-original.svg',
+    'salesforce': 'salesforce/salesforce-original.svg',
+    'aftereffects': 'aftereffects/aftereffects-original.svg',
+    'illustrator': 'illustrator/illustrator-plain.svg',
+    'photoshop': 'photoshop/photoshop-plain.svg',
+    'blender': 'blender/blender-original.svg'
+};
+
+const simpleIconMap = {
+    'langchain': 'langchain',
+    'openai': 'openai',
+    'snowflake': 'snowflake',
+    'apache spark': 'apachespark',
+    'power bi': 'powerbi',
+    'google ads': 'googleads',
+    'meta ads': 'meta',
+    'hubspot': 'hubspot',
+    'mailchimp': 'mailchimp',
+    'semrush': 'semrush',
+    'canva': 'canva',
+    'twilio': 'twilio',
+    'whatsapp api': 'whatsapp',
+    'whatsapp': 'whatsapp',
+    'lottie': 'lottiefiles',
+    'stripe': 'stripe',
+    'razorpay': 'razorpay',
+    'google analytics': 'googleanalytics',
+    'tableau': 'tableau',
+    'datadog': 'datadog',
+    'elastic': 'elastic',
+    'vercel': 'vercel',
+    'cloudflare': 'cloudflare',
+    'supabase': 'supabase',
+    'notion': 'notion',
+    'slack': 'slack',
+    'jira': 'jira',
+    'linear': 'linear',
+    'airflow': 'apacheairflow',
+    'apache airflow': 'apacheairflow',
+    'apache kafka': 'apachekafka',
+    'n8n': 'n8n',
+    'zapier': 'zapier',
+    'oracle netsuite': 'oracle',
+    'microsoft dynamics 365': 'dynamics365',
+    'zoho crm': 'zoho',
+    'sap': 'sap',
+    'odoo': 'odoo',
+    'shopify': 'shopify',
+    'make': 'make',
+    'strapi': 'strapi',
+    'sanity': 'sanity',
+    'tailwind css': 'tailwindcss'
+};
+
+function getTechLogo(tool) {
+    const key = tool.toLowerCase();
+    const devPath = deviconMap[key];
+    if (devPath) return `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${devPath}" alt="${tool}" class="tech-logo" />`;
+    const siSlug = simpleIconMap[key];
+    if (siSlug) return `<img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${siSlug}.svg" alt="${tool}" class="tech-logo tech-logo-si" />`;
+    return '';
+}
+
+function renderServicePage(data, slug) {
+    const service = data[slug];
+    if (!service) return `<div class="container" style="padding: 100px 0; text-align: center;"><h2>Service Not Found</h2></div>`;
+
+    const firstTech = Array.isArray(service.tech_stack)
+        ? service.tech_stack[0]
+        : (service.tech_stack && service.tech_stack.categories ? service.tech_stack.categories[0].tools[0] : '');
+
+    const primaryHref = (service.cta && service.cta.primary_href) || 'contact.html';
+    const primaryLabel = (service.cta && service.cta.button_text) || 'Discuss Your Project';
+
+    let statsHtml = '';
+    if (service.stats && service.stats.length > 0) {
+        statsHtml = `
+        <section class="service-stats-section">
+            <div class="container service-stats-row">
+                ${service.stats.map(s => `
+                <div class="fade-in">
+                    <h3 class="service-stats-value">${s.value}</h3>
+                    <p class="service-stats-label">${s.label}</p>
+                </div>`).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+
+    let benefitsHtml = '';
+    if (service.benefits && service.benefits.items && service.benefits.items.length > 0) {
+        benefitsHtml = `
+        <section class="bento-section fade-in content-section">
+            <div class="section-header center service-section-header">
+                <h4 class="mini-title service-mini-title">${service.benefits.subtitle}</h4>
+                <h2 class="service-section-h2">${service.benefits.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${service.benefits.items.map(b => `
+                    <div class="bento-card">
+                        <h3 class="bento-title">${b.title}</h3>
+                        <p class="bento-desc">${b.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let whyUsHtml = '';
+    if (service.why_us && service.why_us.items && service.why_us.items.length > 0) {
+        whyUsHtml = `
+        <section class="bento-section fade-in content-section home-section-shaded home-section-bordered-top home-section-bordered-bottom">
+            <div class="section-header center service-section-header">
+                <h4 class="mini-title service-mini-title">${service.why_us.subtitle}</h4>
+                <h2 class="service-section-h2">${service.why_us.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${service.why_us.items.map(w => `
+                    <div class="bento-card">
+                        <h3 class="bento-title">${w.title}</h3>
+                        <p class="bento-desc">${w.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let industriesHtml = '';
+    if (service.industries && service.industries.items && service.industries.items.length > 0) {
+        industriesHtml = `
+        <section class="bento-section fade-in content-section">
+            <div class="section-header center service-section-header">
+                <h4 class="mini-title service-mini-title">${service.industries.subtitle}</h4>
+                <h2 class="service-section-h2">${service.industries.title}</h2>
+            </div>
+            <div class="bento-grid">
+                ${service.industries.items.map(ind => `
+                    <div class="bento-card">
+                        <h3 class="bento-title">${ind.title}</h3>
+                        <p class="bento-desc">${ind.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let appPricingHtml = '';
+    if (service.app_pricing && service.app_pricing.tiers && service.app_pricing.tiers.length > 0) {
+        appPricingHtml = `
+        <section class="bento-section fade-in content-section home-section-shaded home-section-bordered-top home-section-bordered-bottom">
+            <div class="section-header center service-section-header">
+                <h2 class="service-section-h2">${service.app_pricing.title}</h2>
+            </div>
+            <div class="grid-3 home-grid-spaced">
+                ${service.app_pricing.tiers.map(t => `
+                    <div class="pricing-tier">
+                        <h3 class="pricing-tier-name">${t.name}</h3>
+                        <div class="pricing-tier-price">${t.price}</div>
+                        <p class="service-pricing-timeline">${t.timeline}</p>
+                        <p class="pricing-tier-desc">${t.includes}</p>
+                        <p class="service-pricing-best-for"><strong>Best for:</strong> ${t.best_for}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </section>
+        `;
+    }
+
+    let faqHtml = '';
+    if (service.faq && service.faq.length > 0) {
+        const normalizedFaq = service.faq.map(item => ({
+            q: item.q || item.question,
+            a: item.a || item.answer
+        }));
+        faqHtml = renderFaq({ subtitle: 'QUESTIONS & ANSWERS', title: 'Frequently Asked Questions', items: normalizedFaq });
+    }
+
+    return `
+    <!-- ════════ HERO (MSME-STYLE CLEAN SPLIT) ════════ -->
+    <section class="msme-hero service-hero-clean">
+        <div class="msme-hero-inner">
+            <div>
+                <div class="msme-badge">${service.badge}</div>
+                <h1>${service.title}</h1>
+                <p class="msme-hero-sub">${service.subtitle}</p>
+                <div class="hero-cta-row">
+                    <a href="${primaryHref}" ${primaryHref.startsWith('http') ? 'target="_blank"' : ''} class="btn-primary large">${primaryLabel}</a>
+                    ${service.cta && service.cta.pricing_url ? `<a href="${service.cta.pricing_url}" class="btn-secondary large">💰 See Pricing</a>` : ''}
+                </div>
+                <div class="hero-trust">
+                    <div class="hero-trust-avatars">
+                        <span class="trust-avatar trust-avatar-1">T</span>
+                        <span class="trust-avatar trust-avatar-2">R</span>
+                        <span class="trust-avatar trust-avatar-3">A</span>
+                        <span class="trust-avatar trust-avatar-4">I</span>
+                    </div>
+                    <span class="hero-trust-text">Trusted by <strong>138+ businesses</strong></span>
+                </div>
+            </div>
+            <div class="hero-mockup service-hero-mockup">
+                <div class="service-hero-screenshot-wrap">
+                    <img src="${service.hero_image || 'assets/ui-mockups/hero_code_editor.png'}" alt="${service.hero_image_alt || 'Service demonstration'}" class="service-hero-screenshot" />
+                </div>
+                ${service.hero_cards ? service.hero_cards.map((c, i) => `
+                <div class="float-card float-card-${i+1}">
+                    <div class="fc-icon">${c.icon}</div>
+                    <div class="fc-label">${c.label}</div>
+                    <div class="fc-value ${c.active ? 'fc-value-active' : ''}">${c.value}</div>
+                </div>
+                `).join('') : `
+                <div class="float-card float-card-1">
+                    <div class="fc-icon">🚀</div>
+                    <div class="fc-label">Projects Delivered</div>
+                    <div class="fc-value fc-value-active">138+</div>
+                </div>
+                <div class="float-card float-card-2">
+                    <div class="fc-icon">⚡</div>
+                    <div class="fc-label">Avg. Delivery</div>
+                    <div class="fc-value">6 Weeks</div>
+                </div>
+                `}
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    ${statsHtml}
+
+    <!-- CORE SOLUTIONS / SUB-SERVICES -->
+    <section class="content-section fade-in">
+        <div class="container">
+            <div class="section-header center service-section-header">
+                <h4 class="mini-title service-mini-title">CAPABILITIES</h4>
+                <h2 class="service-section-h2">Core Features & Solutions</h2>
+            </div>
+            
+            <div class="service-rich-features">
+                ${service.features.map((f, i) => `
+                <div class="service-rich-feature-row ${i % 2 !== 0 ? 'reverse' : ''}" ${f.id ? `id="${f.id}"` : ''}>
+                    ${f.image ? `
+                    <div class="service-rich-feature-image-col">
+                        <div class="service-rich-feature-image-wrapper fade-in">
+                            <img src="${f.image}" alt="${f.title}" loading="lazy" class="service-rich-feature-img" />
+                            <div class="service-rich-feature-glow" style="background: ${f.color};"></div>
+                        </div>
+                    </div>` : ''}
+                    <div class="service-rich-feature-text-col fade-in">
+                        <div class="service-rich-feature-icon" style="color: ${f.color}; background: color-mix(in srgb, ${f.color} 15%, transparent);">${f.icon}</div>
+                        <h3 class="service-rich-feature-title">${f.title}</h3>
+                        <p class="service-rich-feature-desc">${f.desc}</p>
+                        ${f.insight ? `
+                        <div class="service-rich-feature-insight">
+                            <h4 class="service-rich-insight-label">💡 Strategic Insight</h4>
+                            <p class="service-rich-insight-text">${f.insight}</p>
+                        </div>
+                        ` : ''}
+                        ${f.tech_stack && f.tech_stack.length > 0 ? `
+                        <div class="solutions-tech-row" style="margin-top: 16px;">
+                            ${f.tech_stack.map(t => `<div class="solutions-tech-pill">${getTechLogo(t)}<span>${t}</span></div>`).join('')}
+                        </div>` : ''}
+                    </div>
+                </div>
+                `).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- REMOVED: Free Resources, Proof, Tech Stack & Use Cases -->
+
+    <!-- BENEFITS -->
+    ${benefitsHtml}
+
+    <!-- WHY US -->
+    ${whyUsHtml}
+
+    <!-- INDUSTRIES -->
+    ${industriesHtml}
+
+    <!-- APP PRICING -->
+    ${appPricingHtml}
+
+    <!-- DELIVERY PROCESS (STEPPER) -->
+    <section class="compare-section fade-in content-section">
+        <div class="container">
+            <div class="section-header center service-section-header">
+                <h4 class="mini-title service-mini-title">THE METHODOLOGY</h4>
+                <h2 class="service-section-h2">How We Deliver Quality</h2>
+            </div>
+            <div class="stepper">
+                ${service.process.map(p => `
+                    <div class="stepper-step">
+                        <h3 class="stepper-title">${p.number}. ${p.title}</h3>
+                        <p class="stepper-desc">${p.desc}</p>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    ${faqHtml}
+
+    <!-- GRAND CTA -->
+    <section class="grand-cta fade-in">
+        <div class="container">
+            <div class="grand-cta-inner">
+                <h2>${service.cta.title}</h2>
+                <p>${service.cta.description}</p>
+                <a href="${primaryHref}" ${primaryHref.startsWith('http') ? 'target="_blank"' : ''} class="btn-primary service-grand-cta-btn">${primaryLabel}</a>
+                ${service.cta.secondary_href ? `<a href="${service.cta.secondary_href}" target="_blank" class="btn-secondary service-grand-cta-btn">${service.cta.secondary_text || 'Contact Us'}</a>` : (service.cta.pricing_url ? `<a href="${service.cta.pricing_url}" class="btn-secondary service-grand-cta-btn">💰 See Pricing</a>` : '')}
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+function renderAppStore(data) {
+    const ts = data.trust_signals || {};
+    return `
+    <header class="page-header appstore-header">
+        <h4 class="mini-title fade-in">${data.header.subtitle}</h4>
+        <h1 class="main-heading fade-in appstore-header-title">${data.header.title}</h1>
+        <p class="fade-in appstore-callout">${data.positioning_callout}</p>
+    </header>
+
+    <!-- Trust Signals -->
+    <section class="container fade-in appstore-trust-section">
+        <div class="appstore-trust-grid">
+            <div class="spec-card appstore-trust-card">
+                <div class="appstore-trust-row">
+                    <span class="appstore-trust-icon">📱</span>
+                    <p class="appstore-trust-text">${ts.publishing || ''}</p>
+                </div>
+            </div>
+            <div class="spec-card appstore-trust-card">
+                <div class="appstore-trust-row">
+                    <span class="appstore-trust-icon">📦</span>
+                    <p class="appstore-trust-text">${ts.source_code || ''}</p>
+                </div>
+            </div>
+            <div class="spec-card appstore-trust-card">
+                <div class="appstore-trust-row">
+                    <span class="appstore-trust-icon">💳</span>
+                    <p class="appstore-trust-text">${ts.payments || ''}</p>
+                </div>
+            </div>
+            <div class="spec-card appstore-trust-card">
+                <div class="appstore-trust-row">
+                    <span class="appstore-trust-icon">🔧</span>
+                    <p class="appstore-trust-text">${ts.maintenance || ''}</p>
+                </div>
+            </div>
+        </div>
+        <p class="appstore-trust-footnote">Read our full <a href="choosing-a-development-partner.html" class="appstore-trust-link">due-diligence checklist</a> for more detail on each commitment.</p>
+    </section>
+
+    <section class="container appstore-apps-section">
+        <div class="appstore-apps-list">
+            ${data.apps.map(app => `
+            <div class="spec-card fade-in appstore-app-card">
+                <div class="appstore-app-header">
+                    <div class="appstore-app-preview" style="width: 100%; height: 280px; background: linear-gradient(135deg, var(--bg-darker), rgba(255,26,26,0.1)); border-radius: 16px; margin-bottom: 32px; display: flex; align-items: center; justify-content: center; font-size: 4rem; border: 1px solid var(--border-light);">📱 App Preview</div>
+                    <div class="appstore-app-info">
+                        <h2 class="appstore-app-name">${app.name}</h2>
+                        <p class="appstore-app-desc">${app.description}</p>
+                    </div>
+                </div>
+
+                <h3 class="appstore-tiers-title">Pricing & Delivery Options</h3>
+                <div class="appstore-tiers-grid">
+                    ${app.tiers.map(tier => `
+                    <div class="appstore-tier-card">
+                        <h4 class="appstore-tier-name">${tier.name}</h4>
+                        <div class="appstore-tier-price">${tier.price}</div>
+                        <ul class="appstore-tier-features">
+                            ${tier.features.map(f => `<li class="appstore-tier-feature"><span class="appstore-tier-check">✓</span> ${f}</li>`).join('')}
+                        </ul>
+                    </div>`).join('')}
+                </div>
+                <div class="appstore-app-cta">
+                     <a href="contact.html" class="btn-primary">Discuss Requirements</a>
+                </div>
+            </div>
+            `).join('')}
+        </div>
+    </section>
+    `;
+}
+
+function renderLegal(data) {
+    return `
+    <header class="page-header legal-header">
+        <h4 class="mini-title fade-in">${data.subtitle}</h4>
+        <h1 class="main-heading fade-in legal-title">${data.title}</h1>
+        <p class="fade-in legal-effective">Last updated: ${data.effective_date}</p>
+    </header>
+
+    <section class="container fade-in legal-body">
+        ${data.intro ? `<p class="legal-intro">${data.intro}</p>` : ''}
+        ${data.sections.map(s => `
+            <div class="legal-section">
+                <h2 class="legal-section-title">${s.heading}</h2>
+                ${s.body.map(p => `<p class="legal-para">${p}</p>`).join('')}
+                ${s.list ? `<ul class="legal-list">${s.list.map(li => `<li>${li}</li>`).join('')}</ul>` : ''}
+            </div>
+        `).join('')}
+        <div class="legal-contact">
+            <p>${data.contact}</p>
+        </div>
+    </section>
+    `;
+}
+
+function renderTrustPage(data) {
+    return `
+    <header class="page-header trust-header">
+        <h4 class="mini-title fade-in">${data.header.subtitle}</h4>
+        <h1 class="main-heading fade-in trust-header-title">${data.header.title}</h1>
+        <p class="fade-in trust-header-intro">${data.intro}</p>
+    </header>
+
+    <section class="container trust-checklist-section">
+        <div class="trust-checklist-list">
+            ${data.checklist.map((item, i) => `
+            <div class="spec-card fade-in trust-checklist-card">
+                <div class="trust-checklist-header">
+                    <span class="trust-checklist-icon">${item.icon}</span>
+                    <h2 class="trust-checklist-principle">${item.principle}</h2>
+                </div>
+                <div class="trust-checklist-what">
+                    <h3 class="trust-checklist-label">What to check</h3>
+                    <p class="trust-checklist-what-text">${item.what_to_check}</p>
+                </div>
+                <div class="trust-checklist-answer">
+                    <h3 class="trust-checklist-label trust-checklist-label-accent">How Trai Inc. does it</h3>
+                    <p class="trust-checklist-answer-text">${item.trai_answer}</p>
+                </div>
+            </div>
+            `).join('')}
+        </div>
+    </section>
+
+    <section class="container fade-in trust-closing-section">
+        <div class="spec-card trust-closing-card">
+            <h2 class="trust-closing-title">${data.closing.title}</h2>
+            <p class="trust-closing-text">${data.closing.text}</p>
+            <div class="trust-closing-buttons">
+                <a href="${data.closing.cta_link}" target="_blank" class="btn-primary">${data.closing.cta_text}</a>
+                <a href="app-store.html" class="btn-primary trust-closing-btn-outline">View App Pricing</a>
+                <a href="solutions.html" class="btn-primary trust-closing-btn-outline">View Custom Solutions</a>
+            </div>
+        </div>
+    </section>
+    `;
+}
+
+function renderBlog(data) {
+    const postsHtml = data.posts.map(post => `
+        <a href="${post.url}" class="blog-card fade-in" data-tag="${post.tag}" style="text-decoration:none;color:inherit;">
+            <div class="blog-card-thumb">${post.image
+                ? `<img src="${post.image}" alt="${post.title}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" loading="lazy" />`
+                : `<span style="font-size:2.5rem;">${post.emoji}</span>`
+            }</div>
+            <div class="blog-card-body">
+                <span class="blog-tag" style="background:color-mix(in srgb, ${post.tag_color} 15%, transparent);color:${post.tag_color};">${post.tag}</span>
+                <h3>${post.title}</h3>
+                <p>${post.description}</p>
+                <div class="blog-card-footer">
+                    <span class="blog-card-date">${post.date} · ${post.author} · ${post.read_time}</span>
+                    <span class="read-more" style="margin:0;">→</span>
+                </div>
+            </div>
+        </a>
+    `).join('');
+
+    return `
+    <section class="blog-hero fade-in">
+        <div class="container">
+            <p class="mini-title">${data.hero.mini_title}</p>
+            <h1>${data.hero.title}</h1>
+            <p class="blog-hero-desc">${data.hero.description}</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="blog-filters fade-in">
+            ${data.filters.map((f, i) => `<button class="blog-filter${i === 0 ? ' active' : ''}" data-filter="${f}">${f}</button>`).join('')}
+        </div>
+
+        <a href="${data.featured.url}" class="blog-featured fade-in" data-tag="${data.featured.tag}" style="text-decoration:none;color:inherit;">
+            <div class="blog-featured-img">${data.featured.image
+                ? `<img src="${data.featured.image}" alt="${data.featured.title}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" />`
+                : `<span style="font-size:3rem;">${data.featured.emoji}</span>`
+            }</div>
+            <div class="blog-featured-body">
+                <span class="blog-tag" style="background:color-mix(in srgb, ${data.featured.tag_color} 15%, transparent);color:${data.featured.tag_color};">${data.featured.tag}</span>
+                <h2>${data.featured.title}</h2>
+                <p>${data.featured.description}</p>
+                <div class="blog-meta">
+                    <span>${data.featured.author}</span>
+                    <span class="blog-meta-dot"></span>
+                    <span>${data.featured.date}</span>
+                    <span class="blog-meta-dot"></span>
+                    <span>${data.featured.read_time}</span>
+                </div>
+                <span class="read-more">Read Article →</span>
+            </div>
+        </a>
+
+        <div class="blog-grid">
+            ${postsHtml}
+        </div>
+
+        <div class="blog-newsletter fade-in">
+            <h2>${data.newsletter.title}</h2>
+            <p>${data.newsletter.description}</p>
+            <form class="nl-form">
+                <input type="email" name="email" placeholder="${data.newsletter.placeholder}" required>
+                <button type="submit">${data.newsletter.button_text}</button>
+            </form>
+        </div>
+    </div>
+    `;
+}
+
+function renderBlogPost(data) {
+    const takeaways = data.takeaways || [
+        `Actionable strategic blueprint for ${data.meta.tag || 'enterprise software'} implementation in 2026.`,
+        `Production metrics & benchmarks verified by Trai Inc engineering team.`,
+        `Direct ROI guidance and enterprise technical considerations.`
+    ];
+
+    const tldrHtml = `
+        <div class="blog-post-tldr" data-cms-section="tldr">
+            <div class="blog-post-tldr-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                <span>Executive Summary & Key Takeaways</span>
+            </div>
+            <ul data-cms-bind="takeaways">
+                ${takeaways.map(t => `<li>${t}</li>`).join('')}
+            </ul>
+        </div>
+    `;
+
+    const authorCardHtml = `
+        <div class="blog-author-card">
+            <div class="blog-author-avatar">TR</div>
+            <div class="blog-author-info">
+                <div class="blog-author-name-row">
+                    <span class="blog-author-name" data-cms-bind="author">${data.meta.author || 'Tushar Rai'}</span>
+                    <span class="blog-author-verified">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        Verified Author
+                    </span>
+                </div>
+                <div class="blog-author-role">Founder & Principal Architect at Trai Inc</div>
+                <p class="blog-author-bio">Architecting enterprise AI infrastructure, autonomous workflows, and modern high-concurrency cloud platforms for startups and scaling enterprises across India.</p>
+                <div class="blog-author-socials">
+                    <a href="https://www.linkedin.com/in/imtusharrai" target="_blank" rel="noopener noreferrer" class="blog-author-link">LinkedIn Profile →</a>
+                    <a href="about.html" class="blog-author-link">Author Profile & Credentials →</a>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const contentHtml = data.content.map(block => {
+        if (block.type === 'heading') return `<h2>${block.text}</h2>`;
+        if (block.type === 'subheading') return `<h3>${block.text}</h3>`;
+        return `<p>${block.text}</p>`;
+    }).join('');
+
+    const relatedHtml = data.relatedPosts && data.relatedPosts.length ? `
+        <div class="blog-post-related">
+            <h3>Related Articles</h3>
+            <div class="blog-post-related-links">
+                ${data.relatedPosts.map(p => `<a href="${p.url}" class="btn-primary" style="padding:10px 20px;">${p.title} →</a>`).join('')}
+            </div>
+        </div>
+    ` : '';
+
+    return `
+    <header class="cf-hero-wrapper blog-post-hero">
+        <div class="container blog-post-header fade-in">
+            <span class="blog-tag" data-cms-bind="tag" style="background:color-mix(in srgb, ${data.meta.tag_color || '#ff2626'} 15%, transparent);color:${data.meta.tag_color || '#ff2626'};">${data.meta.tag || 'Insights'}</span>
+            <h1 class="blog-post-title" data-cms-bind="title">${data.meta.title}</h1>
+            <div class="blog-post-meta">
+                <span data-cms-bind="author">${data.meta.author || 'Tushar Rai'}</span>
+                <span style="opacity:0.4;">·</span>
+                <span data-cms-bind="date">${data.meta.date || 'July 2026'}</span>
+                <span style="opacity:0.4;">·</span>
+                <span data-cms-bind="read_time">${data.meta.read_time || '5 min read'}</span>
+            </div>
+        </div>
+    </header>
+
+    ${data.meta.image ? `
+    <section class="container blog-post-banner fade-in">
+        <img src="${data.meta.image}" alt="${data.meta.title}" data-cms-bind="image" />
+    </section>
+    ` : ''}
+
+    <article class="container blog-post-body fade-in">
+        ${tldrHtml}
+        <div data-cms-section="blog-content">
+            ${contentHtml}
+        </div>
+        ${authorCardHtml}
+        ${relatedHtml}
+    </article>
+
+    <section class="content-section center section-pad-lg border-t-light">
+        <div class="container">
+            <h2 class="mb-8">Want to discuss this topic?</h2>
+            <a href="contact.html" class="btn btn-primary">Get in Touch →</a>
+        </div>
+    </section>
+    `;
+}
+
+function renderIndustryLandingPage(data) {
+    const statsHtml = data.stats && data.stats.length ? `
+    <section class="service-stats-section fade-in">
+        <div class="container service-stats-row">
+            ${data.stats.map(s => `<div>
+                <h3 class="service-stats-value">${s.value}</h3>
+                <p class="service-stats-label">${s.label}</p>
+            </div>`).join('')}
+        </div>
+    </section>` : '';
+
+    const modulesHtml = data.modules && data.modules.length ? `
+    <section class="container fade-in content-section" style="padding: 70px 24px;">
+        <div class="section-header center">
+            <h4 class="mini-title">MODULAR ARCHITECTURE</h4>
+            <h2>Engineered for ${data.industry}</h2>
+            <p class="section-subtitle" style="max-width:640px;margin:12px auto 0;color:var(--text-muted);">
+                Production-ready modules built with modern frameworks, bank-grade encryption, and seamless API integrations.
+            </p>
+        </div>
+        <div class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+            ${data.modules.map(m => `
+                <div class="bento-card fade-in" style="padding: 28px;">
+                    <div class="bento-icon" style="margin-bottom: 16px;">${m.icon}</div>
+                    <h3 style=" font-weight: 700; margin-bottom: 12px; color: var(--text-main);">${m.title}</h3>
+                    <p style=" line-height: 1.7; color: var(--text-muted);">${m.desc}</p>
+                </div>
+            `).join('')}
+        </div>
+    </section>` : '';
+
+    const caseStudyHtml = data.case_study ? `
+    <section class="container fade-in" style="padding: 40px 24px 70px;">
+        <div class="spec-card fade-in" style="padding: 40px; border-radius: 20px; background: var(--bg-card); border: 1px solid var(--border-light);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div style="max-width: 650px;">
+                    <div class="mini-title font-bold uppercase" style="color: var(--primary); margin-bottom: 8px;">VERIFIED CASE STUDY</div>
+                    <h3 style="margin-bottom: 12px; color: var(--text-main);">${data.case_study.title}</h3>
+                    <p style="color: var(--text-muted);">${data.case_study.desc}</p>
+                </div>
+                <div>
+                    <a href="${data.case_study.link}" class="btn-primary" style="padding: 12px 24px; white-space: nowrap;">View Case Study &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>` : '';
+
+    const faqHtml = data.faqs && data.faqs.length ? `
+    <section class="container fade-in content-section" style="padding: 40px 24px 80px; max-width: 860px; margin: 0 auto;">
+        <div class="section-header center">
+            <h4 class="mini-title">QUESTIONS & ANSWERS</h4>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 36px;">
+            ${data.faqs.map(faq => `
+                <div class="spec-card fade-in" style="padding: 24px 28px; border-radius: 14px;">
+                    <h3 style=" font-weight: 700; color: var(--text-main); margin-bottom: 10px;">${faq.q}</h3>
+                    <p style=" line-height: 1.75; color: var(--text-muted); margin: 0;">${faq.a}</p>
+                </div>
+            `).join('')}
+        </div>
+    </section>` : '';
+
+    const whatsappUrl = `https://wa.me/917905495478?text=${encodeURIComponent(`Hi Trai Inc, I am inquiring about ${data.industry} software solutions for my business in Lucknow.`)}`;
+
+    return `
+    <!-- ════════ HERO ════════ -->
+    <header class="cf-hero-wrapper" style="min-height: auto; padding-top: 140px; padding-bottom: 50px;">
+        <div class="container fade-in" style="max-width: 900px; text-align: center; margin: 0 auto;">
+            <span class="blog-tag" style="background: color-mix(in srgb, var(--primary) 15%, transparent); color: var(--primary); display: inline-block; margin-bottom: 16px; font-weight: 700;">
+                📍 ${data.tag || 'LUCKNOW & UP REGIONAL EXPERTISE'}
+            </span>
+            <h1 class="solutions-header-title" style="margin-bottom: 20px;">
+                ${data.title}
+            </h1>
+            <p class="solutions-header-desc" style="line-height: 1.65; max-width: 760px; margin: 0 auto 32px; color: var(--text-muted);">
+                ${data.hero_desc}
+            </p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <a href="contact.html" class="btn-primary large" style="padding: 14px 28px; font-weight: 700;">
+                    Schedule Free Technical Consultation &rarr;
+                </a>
+                <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn large" style="display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 50px; background: #25D366; color: #fff; text-decoration: none; font-weight: 700;">
+                    💬 Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </header>
+
+    ${statsHtml}
+    ${modulesHtml}
+    ${caseStudyHtml}
+    ${faqHtml}
+
+    <!-- ════════ BOTTOM CTA ════════ -->
+    <section class="content-section center section-pad-lg border-t-light">
+        <div class="container" style="max-width: 700px;">
+            <h2 class="mb-8" >Ready to Modernize Your ${data.industry} Operations?</h2>
+            <p style="color: var(--text-muted);  line-height: 1.7; margin-bottom: 28px;">
+                Speak directly with our engineering leadership in Gomti Nagar, Lucknow. Get a detailed architectural roadmap and fixed-price timeline within 24 hours.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                <a href="contact.html" class="btn btn-primary" style="padding: 12px 28px;">Book a Discovery Call &rarr;</a>
+                <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" style="display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; border-radius: 50px; background: #25D366; color: #fff; text-decoration: none; font-weight: 700;">
+                    Direct WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+    `;
+}

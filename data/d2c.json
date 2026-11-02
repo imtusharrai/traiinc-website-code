@@ -1,0 +1,441 @@
+{
+  "hero": {
+    "badge": "⚡ ONDC CONNECTED • BHARAT D2C ACCELERATOR 2026",
+    "title": "Turn Your Local Retail Business Into a Pan-India D2C Powerhouse",
+    "desc": "Launch your custom branded online store, sell across the nation-wide ONDC buyer network (10Cr+ buyers on Paytm, PhonePe & Magicpin), integrate 28,000+ pin-code logistics, and automate WhatsApp AI sales — with 0% marketplace commission.",
+    "highlights": [
+      {
+        "icon": "🛍️",
+        "text": "0% Commission (Keep 100% Margin)"
+      },
+      {
+        "icon": "🌐",
+        "text": "ONDC Network (Paytm & PhonePe)"
+      },
+      {
+        "icon": "🚚",
+        "text": "28,000+ Pin Codes Multi-Courier"
+      },
+      {
+        "icon": "💬",
+        "text": "WhatsApp AI Automated Sales"
+      }
+    ],
+    "cta": {
+      "primary": {
+        "text": "Launch Your D2C Store &rarr;",
+        "url": "contact.html"
+      },
+      "secondary": {
+        "text": "Explore Live Stack",
+        "url": "#showcase"
+      }
+    },
+    "trust": {
+      "avatars": [
+        "🏪",
+        "🚀",
+        "📦",
+        "💬"
+      ],
+      "count": "138+ Retailers & D2C Brands"
+    }
+  },
+  "metrics_ribbon": [
+    {
+      "val": "28,000+",
+      "label": "Pin Codes Covered Nationwide"
+    },
+    {
+      "val": "30 Days",
+      "label": "Go-Live Timeline"
+    },
+    {
+      "val": "0.8s",
+      "label": "Mobile Storefront Page Load"
+    },
+    {
+      "val": "\u20b910L+",
+      "label": "Avg Monthly Digital Scale"
+    }
+  ],
+  "feature_pills": [
+    "\ud83d\ude80 1-Click Fast Store Launch",
+    "🚀 1-Click Fast Store Launch",
+    "🔄 Real-Time Offline POS & Stock Sync",
+    "🚚 28,000+ Pin Codes Multi-Courier Logistics",
+    "💬 Automated WhatsApp Cart Recovery",
+    "⚡ 1-Click UPI & Razorpay Checkout",
+    "🛡️ COD OTP Verification (RTO Shield)",
+    "🌐 ONDC Network & Marketplace Connect",
+    "📊 Unified Multi-Channel Analytics"
+  ],
+  "services": {
+    "subtitle": "THE 4-PILLAR TRANSFORMATION STACK",
+    "title": "Everything your offline business needs to conquer D2C",
+    "items": [
+      {
+        "icon": "🛒",
+        "title": "Conversion-First D2C Storefront",
+        "desc": "Ultra-fast headless Next.js or customized Shopify stores designed for high mobile conversion. Includes instant 1-click UPI checkout, customer reviews, video reels, and SEO optimization."
+      },
+      {
+        "icon": "🔄",
+        "title": "Unified POS & Counter Inventory Sync",
+        "desc": "Connect your physical store billing counter directly with your online store. Stock automatically updates in real time when items sell in-store or online — zero overselling, zero spreadsheet headaches."
+      },
+      {
+        "icon": "🚚",
+        "title": "Delivery Partner & Payment Gateway",
+        "desc": "Integrated multi-courier logistics (Delhivery, Shiprocket, Bluedart), automated doorstep pickups, instant 1-click UPI payments, and automated COD OTP confirmation."
+      },
+      {
+        "icon": "💬",
+        "title": "WhatsApp Conversational Commerce",
+        "desc": "Turn WhatsApp into your highest-converting sales channel. Customers browse catalogs, place orders, receive instant support, and get abandoned cart reminders 24/7 with automated AI agents."
+      }
+    ]
+  },
+  "categories_strip": {
+    "subtitle": "MULTI-CATEGORY D2C EXCELLENCE",
+    "title": "Engineered for Every Retail & Wholesale Vertical",
+    "items": [
+      {
+        "title": "Fashion, Apparel & Footwear",
+        "desc": "High-converting lookbooks, size charts, variant selectors, and video reels integration.",
+        "image": "assets/d2c/d2c-fashion-showcase.jpg",
+        "tag": "FASHION & LIFESTYLE"
+      },
+      {
+        "title": "Electronics & Mobile Accessories",
+        "desc": "Specs comparison, warranty registration, IMEI tracking, and express multi-carrier courier dispatch.",
+        "image": "assets/d2c/d2c-electronics-showcase.jpg",
+        "tag": "TECH & APPLIANCES"
+      },
+      {
+        "title": "Home Decor & Furnishing",
+        "desc": "Rich visual galleries, bulky freight logistics, and room-matching dimensions support.",
+        "image": "assets/d2c/d2c-home-decor-showcase.jpg",
+        "tag": "HOME & LIVING"
+      },
+      {
+        "title": "Groceries, FMCG & Gourmet",
+        "desc": "Hyperlocal quick delivery, batch & expiry control, and recurring WhatsApp subscriptions.",
+        "image": "assets/d2c/d2c-grocery-showcase.jpg",
+        "tag": "FMCG & ESSENTIALS"
+      }
+    ]
+  },
+  "trending_categories": {
+    "subtitle": "TRENDING CATEGORIES",
+    "title": "Hot Picks Across Every Category",
+    "desc": "Explore bestselling and high-velocity retail categories engineered for scale across custom D2C storefronts and ONDC network marketplaces.",
+    "items": [
+      {
+        "title": "Sports Shoes",
+        "image": "assets/d2c/categories/cat-sports-shoes.png",
+        "tag": "Footwear"
+      },
+      {
+        "title": "Earbuds",
+        "image": "assets/d2c/categories/cat-earbuds.png",
+        "tag": "Audio"
+      },
+      {
+        "title": "T-shirts",
+        "image": "assets/d2c/categories/cat-tshirts.png",
+        "tag": "Apparel"
+      },
+      {
+        "title": "Pickles & Chutney",
+        "image": "assets/d2c/categories/cat-pickles.png",
+        "tag": "Gourmet"
+      },
+      {
+        "title": "Fragrances",
+        "image": "assets/d2c/categories/cat-fragrances.png",
+        "tag": "Beauty"
+      },
+      {
+        "title": "Smart Watches",
+        "image": "assets/d2c/categories/cat-smart-watches.png",
+        "tag": "Wearables"
+      },
+      {
+        "title": "Speakers",
+        "image": "assets/d2c/categories/cat-speakers.png",
+        "tag": "Audio"
+      },
+      {
+        "title": "Juicers",
+        "image": "assets/d2c/categories/cat-juicers.png",
+        "tag": "Kitchen"
+      }
+    ]
+  },
+  "category_matrix": {
+    "subtitle": "EXPLORE ALL PRODUCT CATEGORIES",
+    "title": "Categories & Verticals We Cater To",
+    "desc": "From fashion and daily groceries to auto parts and agricultural inputs — our D2C and ONDC commerce infrastructure powers every retail vertical.",
+    "categories": [
+      {
+        "name": "FASHION",
+        "icon": "assets/d2c/categories/cat-tshirts.png",
+        "items": ["T-shirts", "Shirts", "Sarees", "Casual Shoes", "Jeans"]
+      },
+      {
+        "name": "GROCERY",
+        "icon": "assets/d2c/categories/cat-pickles.png",
+        "items": ["Masala & Seasoning", "Oil & Ghee", "Tea and Coffee", "Snacks and Namkeen", "Snacks, Dry Fruits, Nuts"]
+      },
+      {
+        "name": "ELECTRONICS",
+        "icon": "assets/d2c/categories/cat-smart-watches.png",
+        "items": ["Smart Watch", "Power Bank", "Earphone", "Charger", "Speaker"]
+      },
+      {
+        "name": "APPLIANCES",
+        "icon": "assets/d2c/categories/cat-juicers.png",
+        "items": ["Air Cooler", "Induction Cooktop", "Juicer", "Electric Chimney", "Electric Air Fryer"]
+      },
+      {
+        "name": "BEAUTY & PERSONAL CARE",
+        "icon": "assets/d2c/categories/cat-fragrances.png",
+        "items": ["Fragrance", "Shampoos and Conditioners", "Trimmer", "Soap & Gel", "Hair Care"]
+      },
+      {
+        "name": "HOME & KITCHEN",
+        "icon": "assets/d2c/categories/cat-home-kitchen.png",
+        "items": ["Furniture", "Pooja Needs", "Cookware", "Home Decor", "Bathroom and Kitchen fixtures"]
+      },
+      {
+        "name": "HEALTH & WELLNESS",
+        "icon": "assets/d2c/categories/cat-health-wellness.png",
+        "items": ["Ayurveda", "Feminine care", "Diabetes control", "Health Supplements", "Pain Relief"]
+      },
+      {
+        "name": "AUTO COMPONENT",
+        "icon": "assets/d2c/categories/cat-auto-components.png",
+        "items": ["Auto Parts", "Air Filter", "Oil Filter", "Brake oil", "Window Cleaning"]
+      },
+      {
+        "name": "AGRI INPUT",
+        "icon": "assets/d2c/categories/cat-agri-inputs.png",
+        "items": ["Seeds", "Pesticides", "Fertilizers", "Cattle Feed", "Organic Crop Protection"]
+      },
+      {
+        "name": "VEHICLE & AUTOMOTIVE",
+        "icon": "assets/d2c/categories/cat-vehicles-ev.png",
+        "items": ["Electric Scooter", "Cycle", "EV Accessories & Parts"]
+      }
+    ]
+  },
+  "image_showcase": {
+    "subtitle": "SELLER PLATFORM IN ACTION",
+    "title": "See How Local Businesses Scale With Our D2C & ONDC Platform",
+    "desc": "Our unified merchant dashboard manages real-time POS stock sync, ONDC buyer app cataloging, AI background editing, and automated multi-courier dispatch with 0% commission.",
+    "image": "assets/d2c/d2c-ai-cataloging.png",
+    "image_alt": "D2C and ONDC seller platform dashboard showing AI cataloging and multi-channel commerce management",
+    "stats": [
+      {
+        "val": "10Cr+",
+        "label": "ONDC Buyer Access"
+      },
+      {
+        "val": "28,000+",
+        "label": "Pin Codes Shipped"
+      },
+      {
+        "val": "0%",
+        "label": "Marketplace Fee"
+      },
+      {
+        "val": "24/7",
+        "label": "WhatsApp AI Orders"
+      }
+    ]
+  },
+  "heritage_showcase": {
+    "subtitle": "DISCOVER INDIA, STATE BY STATE",
+    "title": "Explore India's Heritage Through Local Stores",
+    "desc": "Empowering regional artisans, heritage handlooms, and indigenous manufacturers across Indian states to sell nationwide on ONDC & custom D2C storefronts.",
+    "items": [
+      {
+        "state": "UTTAR PRADESH",
+        "title": "Crafted in Uttar Pradesh",
+        "desc": "Shop Chikankari & Woodcraft made to Cherish",
+        "image": "assets/d2c/d2c-heritage-up.png",
+        "cta": "Shop Now"
+      },
+      {
+        "state": "HIMACHAL PRADESH",
+        "title": "Spirit of the Himalayas",
+        "desc": "Discover Heritage Crafts Inspired by Himalayan Spirit",
+        "image": "assets/d2c/d2c-heritage-hp.png",
+        "cta": "Shop Now"
+      },
+      {
+        "state": "MADHYA PRADESH",
+        "title": "Echoes of Madhya Pradesh",
+        "desc": "Shop Gond Paintings, Weaves and Woodwork",
+        "image": "assets/d2c/d2c-heritage-mp.png",
+        "cta": "Shop Now"
+      },
+      {
+        "state": "DELHI",
+        "title": "The Cultural Heartbeat of India",
+        "desc": "Discover Delhi's Timeless Crafts, Flavors, and Vibe",
+        "image": "assets/d2c/d2c-heritage-delhi.png",
+        "cta": "Shop Now"
+      },
+      {
+        "state": "RAJASTHAN",
+        "title": "Rajasthan's Living Palace of Art",
+        "desc": "Royal Crafts and Desert Artistry for Your Home",
+        "image": "assets/d2c/d2c-heritage-rajasthan.png",
+        "cta": "Shop Now"
+      },
+      {
+        "state": "KERALA",
+        "title": "Timeless Treasures of Kerala",
+        "desc": "Shop Aromas & Crafts of God's own country",
+        "image": "assets/d2c/d2c-heritage-kerala.png",
+        "cta": "Shop Now"
+      }
+    ]
+  },
+  "showcase": {
+    "subtitle": "MULTI-CHANNEL D2C & ONDC COMMERCE ENGINE",
+    "title": "A battle-tested digital platform built for scale",
+    "desc": "We engineer custom high-converting e-commerce storefronts, multi-channel ONDC network sync, automated courier logistics, and AI-powered WhatsApp commerce to scale local stores nationwide.",
+    "items": [
+      {
+        "title": "Omnichannel Sales & Multi-Network Sync",
+        "desc": "Sell across your custom website, ONDC network, and major marketplaces from a single unified inventory and order management system.",
+        "image": "assets/d2c/d2c-omnichannel-workflow.png",
+        "tag": "OMNICHANNEL ENGINE"
+      },
+      {
+        "title": "Conversational Orders & Live WhatsApp Dashboard",
+        "desc": "Automate product discovery, inquiries, cart recovery, and order confirmations with an integrated conversational commerce dashboard.",
+        "image": "assets/d2c/d2c-conversation-dashboard.png",
+        "tag": "WHATSAPP COMMERCE"
+      },
+      {
+        "title": "AI Magic Cataloging & Instant Product Listings",
+        "desc": "Automate product descriptions, smart background enhancement, variant management, and SEO tags with AI-powered catalog tools.",
+        "image": "assets/d2c/d2c-ai-cataloging.png",
+        "tag": "AI CATALOGING"
+      },
+      {
+        "title": "1-Click Store Launch & Rapid Digital Migration",
+        "desc": "Transition from offline counter sales to a modern, mobile-first e-commerce store with integrated UPI payments and automated courier dispatch.",
+        "image": "assets/d2c/d2c-store-migration.png",
+        "tag": "RAPID LAUNCH"
+      }
+    ]
+  },
+  "comparison": {
+    "subtitle": "THE TRANSFORMATION",
+    "title": "Offline Limitations vs Pan-India D2C Scale",
+    "old_way": {
+      "title": "\ud83c\udfea Traditional Offline Store",
+      "items": [
+        "Restricted to local 5km foot traffic and walk-ins",
+        "Shop closes at 9 PM \u2014 zero sales while you sleep",
+        "Manual handwritten bills or disconnected local POS",
+        "High customer acquisition cost with zero repeat retention",
+        "Manual parcel packaging and counter courier queues",
+        "No digital customer database or remarketing capability"
+      ]
+    },
+    "new_way": {
+      "title": "\ud83d\ude80 Trai Inc D2C Engine",
+      "items": [
+        "Reach 28,000+ pin codes and millions of buyers nationwide",
+        "24/7 online orders + automated WhatsApp AI sales assistant",
+        "Real-time automatic inventory sync between counter and web",
+        "Automated WhatsApp remarketing and 34% cart recovery",
+        "1-click doorstep multi-courier pickup with live tracking",
+        "Unified customer CRM with repeat purchase loyalty funnels"
+      ]
+    }
+  },
+  "pricing": {
+    "subtitle": "TRANSPARENT LAUNCH PACKAGES",
+    "title": "Fixed investment. Zero hidden costs. Rapid turnaround.",
+    "packages": [
+      {
+        "name": "D2C Starter Launchpad",
+        "price": "\u20b935,000",
+        "period": "one-time setup",
+        "desc": "Perfect for offline stores launching their first e-commerce presence with automated courier delivery.",
+        "features": [
+          "Mobile-first responsive e-commerce store",
+          "Payment gateway (UPI, Cards, NetBanking)",
+          "Shiprocket multi-courier shipping integration",
+          "Up to 100 products catalog setup",
+          "Basic WhatsApp order notification",
+          "Go-live in 7 to 10 days"
+        ],
+        "popular": false
+      },
+      {
+        "name": "D2C Growth Engine",
+        "price": "\u20b975,000",
+        "period": "one-time setup",
+        "desc": "Full omnichannel transformation with physical store POS sync, WhatsApp AI commerce, and RTO shield.",
+        "features": [
+          "Custom high-converting storefront (Shopify / Next.js)",
+          "Real-time offline billing counter stock sync",
+          "Automated WhatsApp AI store & cart recovery",
+          "COD OTP verification & RTO reduction shield",
+          "Automated GST invoice generation",
+          "Multi-courier dispatch with live tracking SMS",
+          "Go-live in 15 to 20 days"
+        ],
+        "popular": true
+      },
+      {
+        "name": "Enterprise D2C Platform",
+        "price": "\u20b91,50,000+",
+        "period": "custom quote",
+        "desc": "Headless enterprise architecture, multi-warehouse ERP, and ONDC network marketplace connectivity.",
+        "features": [
+          "Headless Next.js e-commerce architecture (0.8s load)",
+          "Full ONDC Seller Network integration",
+          "Multi-warehouse & multi-location inventory ERP",
+          "Custom Android & iOS mobile shopping apps",
+          "AI recommendation & personalized upsell engine",
+          "Dedicated growth engineer & 24/7 SLA support"
+        ],
+        "popular": false
+      }
+    ]
+  },
+  "estimator": {
+    "subtitle": "INSTANT D2C ESTIMATOR",
+    "title": "Calculate Your Store Launch Investment",
+    "desc": "Select your business requirements and get an instant, transparent quote for your digital transformation.",
+    "bullets": [
+      "Fixed, transparent pricing with milestone payments",
+      "Full source code and store ownership transferred to you",
+      "Includes payment gateway and shipping setup",
+      "30 days free post-launch support and training"
+    ],
+    "options": [
+      {
+        "value": 35000,
+        "label": "Starter D2C Online Store (\u20b935K)"
+      },
+      {
+        "value": 75000,
+        "label": "D2C Growth Engine + POS Sync + WhatsApp (\u20b975K)"
+      },
+      {
+        "value": 150000,
+        "label": "Enterprise Headless D2C + ONDC Connect (\u20b91.5L+)"
+      }
+    ]
+  }
+}
